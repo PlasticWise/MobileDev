@@ -7,6 +7,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.ActivityUploadBinding
@@ -63,6 +65,7 @@ class UploadActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -76,7 +79,7 @@ class UploadActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         binding.btnGallery.setOnClickListener { startGallery() }
-        binding.btnCamera.setOnClickListener { startCameraX() }
+//        binding.btnCamera.setOnClickListener { startCameraX() }
 
         binding.btnUpload.setOnClickListener { uploadImage(0.0, 0.0) }
 
@@ -109,6 +112,7 @@ class UploadActivity : AppCompatActivity() {
                 binding.btnUpload.setOnClickListener { uploadImage(0.0, 0.0) }
             }
         }
+        binding.btnCancel.setOnClickListener { cancelAction() }
     }
 
 
@@ -198,7 +202,11 @@ class UploadActivity : AppCompatActivity() {
             binding.ivUpload.setImageURI(it)
         }
     }
-
+    private fun cancelAction() {
+        binding.edtDescription.setText("")
+        currentImageUri = null
+        binding.ivUpload.setImageResource(R.drawable.background_upload)
+    }
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }

@@ -27,6 +27,7 @@
 
 
     <!-- Other string resources -->
+    <string name="title_upload">Title</string>
     <string name="description_uploadd">Description</string>
     <string name="uploadd">Upload</string>
     <string name="location_permission">Allow access to your location:</string>
