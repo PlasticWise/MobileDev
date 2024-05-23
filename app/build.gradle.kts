@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myintermediate"
+    namespace = "com.capstone.plasticwise"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myintermediate"
+        applicationId = "com.capstone.plasticwise"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

@@ -65,15 +65,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/location_permission"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/switchFeature"
             android:layout_width="wrap_content"
@@ -86,13 +77,32 @@
             app:thumbIcon="@drawable/ic_close"
             android:textStyle="normal" />
 
-        <Button
-            android:id="@+id/btnUpload"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:text="@string/upload" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:padding="12dp">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:text="@string/upload" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>
