@@ -4,7 +4,7 @@
     <string name="description">Ayo jelajahi dunia sosial dan buka peluang untuk bertemu
         dengan orang baru yang menarik! Dapatkan pengalaman yang tak terlupakan dengan terus
         memperbarui feed UseGram-mu untuk menjalin hubungan harmonis dengan komunitas anda.</string>
-    <string name="masuk">Masuk</string>
+    <string name="masuk">Sign In</string>
     <string name="daftar">Daftar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -14,7 +14,7 @@
     <string name="password">Password</string>
     <string name="input_your_email">Input your email</string>
     <string name="input_your_password">Input Your Password</string>
-    <string name="nama">Nama</string>
+    <string name="nama">Name</string>
     <string name="name">Input your name</string>
     <string name="add_story">Add Story</string>
     <string name="description_upload">Masukkan deskripsi</string>
@@ -32,6 +32,12 @@
     <string name="uploadd">Upload</string>
     <string name="location_permission">Allow access to your location:</string>
     <string name="enable_location">Enable Location</string>
+    <string name="sign_in">Sign In</string>
+    <string name="crafting_signIn">Hello, Lets Crafting Again !</string>
+    <string name="no_have_account">Don’t have an Account ?</string>
+    <string name="sign_up"> Sign Up</string>
+    <string name="desc_signUp">Input your data, Turning Plastic Awareness into Action</string>
+    <string name="have_an_account">Have an Account ?</string>
 
 
 </resources>

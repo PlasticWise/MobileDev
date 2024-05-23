@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.FragmentSignupBinding
@@ -24,6 +25,7 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         uploadData()
+
     }
 
     private fun uploadData() {
@@ -60,6 +62,13 @@ class SignupFragment : Fragment() {
                     }
                 }
             }
+        }
+        binding.tvSignIn.setOnClickListener {
+            val loginFragment = LoginFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, loginFragment, LoginFragment::class.java.simpleName)
+                .commit()
         }
     }
 
