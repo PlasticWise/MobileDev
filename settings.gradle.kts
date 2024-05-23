@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Intermediate"
+rootProject.name = "PlasticWise"
 include(":app")
  

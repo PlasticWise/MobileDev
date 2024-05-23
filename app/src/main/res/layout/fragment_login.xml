@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@id/emailTextView"
         app:startIconDrawable="@drawable/ic_email_24">
 
-        <com.example.myintermediate.MyEmailText
+        <com.capstone.plasticwise.MyEmailText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
-        <com.example.myintermediate.MyPasswordText
+        <com.capstone.plasticwise.MyPasswordText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
