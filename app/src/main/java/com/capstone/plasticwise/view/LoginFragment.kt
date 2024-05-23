@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.data.pref.UserModel
@@ -76,6 +77,14 @@ class LoginFragment : Fragment() {
                         }
                     }
                 }
+        }
+
+        binding.tvSignUp.setOnClickListener {
+            val signupFragment = SignupFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, signupFragment, SignupFragment::class.java.simpleName)
+                .commit()
         }
     }
 
