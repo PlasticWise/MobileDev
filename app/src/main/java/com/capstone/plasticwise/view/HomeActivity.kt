@@ -32,7 +32,7 @@ HomeActivity : AppCompatActivity() {
         viewModel.getSession().observe(this) { session ->
             if (!session.isLogin) {
                 finish()
-                startActivity(Intent(this@HomeActivity, MainActivity::class.java))
+                startActivity(Intent(this@HomeActivity, UserActivity::class.java))
             }
         }
 
@@ -47,7 +47,7 @@ HomeActivity : AppCompatActivity() {
                     viewModel.logout()
                     finish()
                     supportFragmentManager.beginTransaction().remove(homeFragment).commit()
-                    startActivity(Intent(this@HomeActivity, MainActivity::class.java))
+                    startActivity(Intent(this@HomeActivity, UserActivity::class.java))
                 }
                 setNegativeButton("No") { dialog, _ ->
                     dialog.cancel()

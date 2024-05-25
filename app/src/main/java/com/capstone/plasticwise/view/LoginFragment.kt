@@ -84,6 +84,7 @@ class LoginFragment : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, signupFragment, SignupFragment::class.java.simpleName)
+                .addToBackStack(null)
                 .commit()
         }
     }
