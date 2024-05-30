@@ -31,6 +31,9 @@
     <string name="sign_up"> Sign Up</string>
     <string name="desc_signUp">Input your data, Turning Plastic Awareness into Action</string>
     <string name="have_an_account">Have an Account ?</string>
+    <string name="open_map">Open Map!</string>
+    <string name="search">Search</string>
 
+    <string name="user">Halo, %s !</string>
 
 </resources>

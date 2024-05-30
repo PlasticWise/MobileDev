@@ -7,11 +7,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.plasticwise.R
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.adapter.LoadingStateAdapter
 import com.capstone.plasticwise.adapter.StoryAdapter
@@ -45,7 +48,7 @@ class HomeFragment : Fragment() {
         homeFragmentViewModel.getSession().observe(requireActivity()) { session ->
 
             val username = session.username
-            binding.tvUser.text = username
+            binding.tvUser.text = getString(R.string.user, username)
             Log.d("HomeFragment", "this name $username")
         }
         setupData()
@@ -61,6 +64,14 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
         playAnimation()
+
+//        val trailingIcon = LayoutInflater.from(requireActivity()).inflate(R.layout.trailing_icon, binding.searchBar, false) as ImageView
+//        val layoutParams = ViewGroup.LayoutParams(
+//            ViewGroup.LayoutParams.WRAP_CONTENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        )
+//        trailingIcon.layoutParams = layoutParams
+//        binding.searchBar.addView(trailingIcon)
     }
 
     private fun playAnimation() {

@@ -36,8 +36,6 @@ HomeActivity : AppCompatActivity() {
             }
         }
 
-
-
         val homeFragment = HomeFragment()
         binding.btnLogout.setOnClickListener {
             MaterialAlertDialogBuilder(this).apply {
