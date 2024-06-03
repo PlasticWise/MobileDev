@@ -5,8 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:strokeColor="?attr/colorSecondary"
+    app:strokeWidth="1cd ..dp"
+    app:cardForegroundColor="@android:color/transparent"
+    app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+    app:rippleColor="?attr/colorOnSurfaceVariant"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,6 +39,7 @@
             android:paddingBottom="4dp"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:fontFamily="@font/inter_bold"
             app:layout_constraintTop_toBottomOf="@+id/ivStory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +53,7 @@
             android:paddingEnd="16dp"
             android:paddingTop="4dp"
             android:paddingBottom="8dp"
+            android:fontFamily="@font/inter"
             android:textSize="16sp"
             android:textStyle="normal"
             android:maxLines="2"

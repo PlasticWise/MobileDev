@@ -12,6 +12,7 @@ import com.capstone.plasticwise.viewModel.HomeViewModel
 import com.capstone.plasticwise.viewModel.LoginViewModel
 import com.capstone.plasticwise.viewModel.ProfileFragmentViewModel
 import com.capstone.plasticwise.viewModel.RegisterViewModel
+import com.capstone.plasticwise.viewModel.SplashScreenViewModel
 import com.capstone.plasticwise.viewModel.UploadViewModel
 
 class ViewModelFactory(private val repository: AuthenticationRepository) :
@@ -45,6 +46,10 @@ class ViewModelFactory(private val repository: AuthenticationRepository) :
             }
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
                 MapsViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(SplashScreenViewModel::class.java) -> {
+                SplashScreenViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown View Model class: " + modelClass.name)
         }
