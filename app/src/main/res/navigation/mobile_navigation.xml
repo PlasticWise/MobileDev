@@ -15,4 +15,9 @@
         android:name="com.capstone.plasticwise.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_detect"
+        android:name="com.capstone.plasticwise.view.DetectFragment"
+        android:label="fragment_detect"
+        tools:layout="@layout/fragment_detect" />
 </navigation>

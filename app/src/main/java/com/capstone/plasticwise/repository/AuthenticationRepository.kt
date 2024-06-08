@@ -70,6 +70,19 @@ class AuthenticationRepository private constructor(
         ).liveData
     }
 
+    fun getPost() = liveData {
+        emit(Result.Loading)
+        try {
+            val successResponse = apiService.getStories()
+            val limitedResponse = successResponse.listStory.take(5)
+            emit(Result.Success(limitedResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        }
+    }
+
     fun getUserMap() = liveData {
         emit(Result.Loading)
         try {
@@ -94,6 +107,18 @@ class AuthenticationRepository private constructor(
         }
     }
 
+    fun getCraft() = liveData {
+        emit(Result.Loading)
+        try {
+            val successResponse = apiService.getStories()
+            val limitedResponse = successResponse.listStory.take(3)
+            emit(Result.Success(limitedResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        }
+    }
     fun register(name: String, email: String, password: String) = liveData {
         emit(Result.Loading)
         try {

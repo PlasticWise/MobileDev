@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.FragmentProfileBinding
 import com.capstone.plasticwise.viewModel.ProfileFragmentViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 
 class ProfileFragment : Fragment() {
@@ -17,6 +18,8 @@ class ProfileFragment : Fragment() {
     private val profileViewModel by viewModels<ProfileFragmentViewModel> {
         ViewModelFactory.getInstance(requireActivity())
     }
+
+    private lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        auth = FirebaseAuth.getInstance()
+
+//        val user = auth.currentUser
+//        if (user != null) {
+//            binding.tvProfile.text = user.displayName
+//            binding.tvEmail.text = user.email
+//        }
         profileViewModel.getSession().observe(requireActivity()) { result ->
             val username = result.username
             binding.tvProfile.text = username
