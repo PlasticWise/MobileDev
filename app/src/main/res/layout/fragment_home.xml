@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    android:background="@color/whitePrimary"
+>>>>>>> parent of e28cc82 ([delete] main activity)
 =======
     android:background="@color/whitePrimary"
 >>>>>>> parent of e28cc82 ([delete] main activity)
