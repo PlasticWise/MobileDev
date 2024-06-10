@@ -103,7 +103,7 @@ class LoginFragment : Fragment() {
                         MaterialAlertDialogBuilder(requireActivity())
                             .setTitle("Login Success")
                             .setMessage("Welcome ${result.data.loginResult.name}")
-                            .setPositiveButton("Ok") { _, _ ->
+                            .setPositiveButton("Next") { _, _ ->
                                 val intent =
                                     Intent(requireActivity(), HomeActivity::class.java)
                                 startActivity(intent)

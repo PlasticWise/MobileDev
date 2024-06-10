@@ -38,7 +38,7 @@ class SplashActivity : AppCompatActivity() {
 
         // Start animations
         binding.iconPicture.startAnimation(fadeInAnimation)
-        binding.splashText.startAnimation(slideUpAnimation)
+        binding.splashText.startAnimation(fadeInAnimation)
 
         // Observe session and navigate accordingly
         observeSession()

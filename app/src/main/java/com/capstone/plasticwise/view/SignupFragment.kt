@@ -63,7 +63,7 @@ class SignupFragment : Fragment() {
                                                     MaterialAlertDialogBuilder(requireContext())
                                                         .setTitle("Success")
                                                         .setMessage("Account Created")
-                                                        .setPositiveButton("Ok") { dialog, _ ->
+                                                        .setPositiveButton("Next") { dialog, _ ->
                                                             dialog.dismiss()
                                                             navigateToLoginFragment()
                                                         }

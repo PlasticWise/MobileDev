@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitePrimary"
     tools:context=".view.DetectFragment">
 
 
@@ -16,14 +17,30 @@
         android:layout_marginEnd="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guidelineDetect">
+
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/topAppBar"
+            android:background="@color/whitePrimary"
             android:minHeight="?attr/actionBarSize"
-            app:title="PlasticWise"
-            app:menu="@menu/top_app_bar" />
+            app:menu="@menu/top_app_bar"
+            app:titleTextColor="@android:color/black">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="0dp"
+                android:text="Detect"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivDetect"
         android:layout_width="0dp"

@@ -205,7 +205,7 @@ class UploadActivity : AppCompatActivity() {
     private fun cancelAction() {
         binding.edtDescription.setText("")
         currentImageUri = null
-        binding.ivUpload.setImageResource(R.drawable.background_upload)
+        binding.ivUpload.setImageResource(R.drawable.white_rectangle)
     }
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA

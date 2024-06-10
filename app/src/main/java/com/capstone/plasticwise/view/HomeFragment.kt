@@ -126,7 +126,7 @@ class HomeFragment : Fragment() {
 
         val pieDataSet = PieDataSet(list, null)
 
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS, 255)
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS, 255)
         pieDataSet.valueTextSize = 10f
 
 

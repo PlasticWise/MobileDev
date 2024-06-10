@@ -6,15 +6,21 @@
     app:startDestination="@id/nav_home">
 
     <fragment
+        android:id="@+id/fragmentAbout"
+        android:name="com.capstone.plasticwise.view.FragmentAbout"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
         android:id="@+id/nav_home"
         android:name="com.capstone.plasticwise.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.capstone.plasticwise.view.ProfileFragment"
+        android:name="com.capstone.plasticwise.view.SettingsFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/nav_detect"
         android:name="com.capstone.plasticwise.view.DetectFragment"
