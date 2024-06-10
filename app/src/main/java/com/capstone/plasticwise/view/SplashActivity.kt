@@ -10,11 +10,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.plasticwise.databinding.ActivitySplashBinding
+<<<<<<< HEAD
 import com.capstone.plasticwise.view.HomeActivity
 import com.capstone.plasticwise.view.UserActivity
 import com.capstone.plasticwise.viewModel.SplashScreenViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+=======
+import com.capstone.plasticwise.view.MainActivity
+>>>>>>> parent of e28cc82 ([delete] main activity)
 
 class SplashActivity : AppCompatActivity() {
 
@@ -36,6 +40,7 @@ class SplashActivity : AppCompatActivity() {
         binding.iconPicture.startAnimation(fadeInAnimation)
         binding.splashText.startAnimation(slideUpAnimation)
 
+<<<<<<< HEAD
         observeSession()
     }
 
@@ -58,5 +63,11 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateToUserActivity() {
         startActivity(Intent(this, UserActivity::class.java))
         finish()
+=======
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }, 3000) // 3 seconds delay
+>>>>>>> parent of e28cc82 ([delete] main activity)
     }
 }

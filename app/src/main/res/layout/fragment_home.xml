@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+<<<<<<< HEAD
+=======
+    android:background="@color/whitePrimary"
+>>>>>>> parent of e28cc82 ([delete] main activity)
     android:layout_height="match_parent"
     android:background="@color/md_theme_background"
     tools:context=".view.HomeFragment">
