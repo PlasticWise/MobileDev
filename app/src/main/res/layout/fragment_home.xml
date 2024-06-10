@@ -49,7 +49,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/profileUser"
                 app:layout_constraintStart_toEndOf="@+id/profileUser"
                 app:layout_constraintTop_toTopOf="@+id/profileUser"
-                tools:text="Halo, Haikal !" />
+                tools:text="Halo, User !" />
+
 
             <Button
                 style="?attr/materialIconButtonFilledStyle"

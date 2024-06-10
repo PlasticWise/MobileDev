@@ -25,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
             if (result != null){
                 when(result) {
                     is Result.Loading -> {
-                        showToast("Loading")
+                        showToast("Opened")
                     }
                     is Result.Success -> {
                         val username = result.data.story?.name

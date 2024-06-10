@@ -1,0 +1,6 @@
+<!-- res/drawable/circle_shape.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/greenPrimary"/> <!-- Change the color to your preference -->
+    <size android:width="80dp" android:height="80dp"/> <!-- Ensure this matches your ImageView dimensions -->
+    <corners android:radius="40dp"/> <!-- Half of the width/height to make it a perfect circle -->
+</shape>

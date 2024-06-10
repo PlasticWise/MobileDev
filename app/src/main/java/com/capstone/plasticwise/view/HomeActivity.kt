@@ -81,6 +81,7 @@ HomeActivity : AppCompatActivity() {
                 } R.id.nav_profile -> {
                     setupButton(false)
                 }
+
             }
         }
     }

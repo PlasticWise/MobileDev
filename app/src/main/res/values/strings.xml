@@ -1,4 +1,12 @@
 <resources>
+    <string name="general_settings">General Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_off">Notifications are off</string>
+    <string name="notifications_on">Notifications are on</string>
+    <string name="username">Username</string>
+    <string name="other_settings">Other Settings</string>
+    <string name="about">About</string>
+    <string name="about_summary">Learn more about this app</string>
     <string name="app_name">PlasticWise</string>
     <string name="welcome">Welcome to PlasticWise</string>
     <string name="description">Turning Plastic Awareness into Action</string>

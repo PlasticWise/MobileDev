@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.capstone.plasticwise.ViewModelFactory
-import com.capstone.plasticwise.databinding.FragmentProfileBinding
+import com.capstone.plasticwise.databinding.FragmentSettingsBinding
 import com.capstone.plasticwise.viewModel.ProfileFragmentViewModel
 
 
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private lateinit var binding: FragmentProfileBinding
+class SettingsFragment : Fragment() {
+
+    private lateinit var binding: FragmentSettingsBinding
     private val profileViewModel by viewModels<ProfileFragmentViewModel> {
         ViewModelFactory.getInstance(requireActivity())
     }
@@ -27,7 +27,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -6,3 +6,4 @@ plugins {
     id("com.google.devtools.ksp") version "1.9.10-1.0.13" apply false
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin) apply false
 }
+

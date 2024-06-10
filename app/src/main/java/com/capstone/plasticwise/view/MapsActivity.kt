@@ -69,7 +69,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapsViewModel.getUserMap().observe(this) { result ->
             when (result) {
                 is Result.Loading -> {
-                    showToast("Loading")
+                    showToast("Opened")
                 }
 
                 is Result.Success -> {

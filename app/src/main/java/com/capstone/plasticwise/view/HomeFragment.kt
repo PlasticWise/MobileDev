@@ -48,8 +48,9 @@ class HomeFragment : Fragment() {
         homeFragmentViewModel.getSession().observe(requireActivity()) { session ->
 
             val username = session.username
+            val email = session.email
             binding.tvUser.text = getString(R.string.user, username)
-            Log.d("HomeFragment", "this name $username")
+            Log.d("HomeFragment", "this name $username", )
         }
         setupData()
         binding.fabAdd.setOnClickListener {
@@ -59,7 +60,7 @@ class HomeFragment : Fragment() {
 
         binding.rvHome.layoutManager = LinearLayoutManager(requireActivity())
 
-        binding.fabMap.setOnClickListener {
+        binding.btnMap.setOnClickListener {
             val intent = Intent(requireActivity(), MapsActivity::class.java)
             startActivity(intent)
         }
@@ -75,7 +76,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.fabMap, View.TRANSLATION_Y, -180f).apply {
+        ObjectAnimator.ofFloat(binding.btnMap, View.TRANSLATION_Y, -180f).apply {
             duration = 500
         }.start()
     }
