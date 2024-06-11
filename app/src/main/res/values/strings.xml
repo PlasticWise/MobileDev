@@ -1,12 +1,9 @@
 <resources>
-    <string name="app_name">My Intermediate</string>
-    <string name="welcome">Selamat Datang di UseGram</string>
-    <string name="description">Ayo jelajahi dunia sosial dan buka peluang untuk bertemu
-        dengan orang baru yang menarik! Dapatkan pengalaman yang tak terlupakan dengan terus
-        memperbarui feed UseGram-mu untuk menjalin hubungan harmonis dengan komunitas anda.</string>
-    <string name="masuk">Masuk</string>
-    <string name="daftar">Daftar</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">PlasticWise</string>
+    <string name="welcome">Welcome to PlasticWise</string>
+    <string name="description">Turning Plastic Awareness into Action</string>
+    <string name="masuk">Sign In</string>
+    <string name="daftar">Sign Up</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connect">Let\'s connect with your community</string>
     <string name="please_provide">Please provide your data first</string>
@@ -14,23 +11,45 @@
     <string name="password">Password</string>
     <string name="input_your_email">Input your email</string>
     <string name="input_your_password">Input Your Password</string>
-    <string name="nama">Nama</string>
+    <string name="nama">Name</string>
     <string name="name">Input your name</string>
     <string name="add_story">Add Story</string>
-    <string name="description_upload">Masukkan deskripsi</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="upload">Upload</string>
     <string name="failed_get_image">Gagal mengambil gambar.</string>
     <string name="retry">Retry</string>
     <string name="title_activity_maps">MapsActivity</string>
-
-
-    <!-- Other string resources -->
+    <string name="title_upload">Title</string>
     <string name="description_uploadd">Description</string>
     <string name="uploadd">Upload</string>
     <string name="location_permission">Allow access to your location:</string>
     <string name="enable_location">Enable Location</string>
+    <string name="sign_in">Sign In</string>
+    <string name="crafting_signIn">Hello, Lets Crafting Again !</string>
+    <string name="no_have_account">Don’t have an Account ?</string>
+    <string name="sign_up"> Sign Up</string>
+    <string name="desc_signUp">Input your data, Turning Plastic Awareness into Action</string>
+    <string name="have_an_account">Have an Account ?</string>
+    <string name="open_map">Open Map!</string>
+    <string name="search">Search Idea...</string>
+
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="detect">Detect</string>
+    <string name="input_your_image_for_result">Input Your Image For Result !</string>
+    <string name="txt_welcome">Trash Type Detection</string>
+    <string name="desc_menu1">Use our technology to detect different types of waste and get the information you need.</string>
+    <string name="titleMenu2">Valueable Information</string>
+    <string name="desc_menu2">We provide a complete guide to waste management so you can find all the information you need.</string>
+    <string name="titlemenu3">Post Management Tips</string>
+    <string name="desc_menu3">You can post tips and ways to manage waste effectively to help the community</string>
+    <string name="skip">Next</string>
 
 
+    <string name="user">What\'s up, %s !</string>
+    <string name="tv_label_title">Plastic Waste in Indonesia</string>
+    <string name="slogan_label">Let\'s Take Care of Our Earth!</string>
+    <string name="tv_description">Unique Creations from Plastic Waste!</string>
+    <string name="tv_desc1">Let\'s Crafting Your Waste!</string>
+    <string name="title_chart">Percentage of Plastic Waste in Indonesia</string>
 </resources>
