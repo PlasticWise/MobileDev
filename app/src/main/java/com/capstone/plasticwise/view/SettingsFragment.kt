@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.ViewModelFactory
-import com.capstone.plasticwise.databinding.FragmentAboutBinding
 import com.capstone.plasticwise.databinding.FragmentSettingsBinding
 import com.capstone.plasticwise.viewModel.ProfileFragmentViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -36,7 +34,6 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val fragmentAbout = FragmentAbout()
         auth = FirebaseAuth.getInstance()
         profileViewModel.getSession().observe(viewLifecycleOwner) { result ->
             val username = result.username
@@ -50,11 +47,16 @@ class SettingsFragment : Fragment() {
         }
 
         binding.layoutAbout.setOnClickListener {
-        
+        val aboutFragment = AboutFragment()
+        val fragmentManager = parentFragmentManager
+        fragmentManager.beginTransaction().apply {
+            replace(
+                R.id.fragment_container,
+                aboutFragment,
+                AboutFragment::class.java.simpleName
+            )
         }
-    }
-    private fun openAbout (fragment: AboutFragment){
-
+        }
     }
     private fun logout() {
        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().clear().apply()
