@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/auto_awesome/baseline_auto_awesome_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/image_search/baseline_image_search_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_auto_awesome_24" />
+                            <entry key="outputName" value="baseline_image_search_24" />
                             <entry key="sourceFile" value="C:\Users\ASUS\Downloads\Waste management-rafiki.svg" />
                           </map>
                         </option>

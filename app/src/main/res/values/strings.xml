@@ -52,4 +52,23 @@
     <string name="tv_description">Unique Creations from Plastic Waste!</string>
     <string name="tv_desc1">Let\'s Crafting Your Waste!</string>
     <string name="title_chart">Percentage of Plastic Waste in Indonesia</string>
+
+
+    <string-array name="categories_array">
+        <item>Plastic</item>
+        <item>Metal</item>
+        <item>Paper</item>
+        <item>Glass</item>
+        <item>Organic</item>
+        <item>Electronic</item>
+    </string-array>
+
+    <string-array name="types_array">
+        <item>Recyclable</item>
+        <item>Non-Recyclable</item>
+        <item>Hazardous</item>
+        <item>Non-Hazardous</item>
+        <item>Bulk</item>
+        <item>Single Item</item>
+    </string-array>
 </resources>

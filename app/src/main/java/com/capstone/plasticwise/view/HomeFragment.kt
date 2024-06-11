@@ -57,10 +57,10 @@ class HomeFragment : Fragment() {
             Log.d("HomeFragment", "this name $username")
         }
 
-        Glide.with(requireActivity())
-            .load(R.drawable.ic_profile_user)
-            .circleCrop()
-            .into(binding.ivUser)
+//        Glide.with(requireActivity())
+//            .load(R.raw.anim_upload)
+//            .circleCrop()
+//            .into(binding.lottieAnimationView)
 //        setupData()
 
         binding.rvHome.layoutManager = LinearLayoutManager(requireActivity())

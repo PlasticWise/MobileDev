@@ -6,10 +6,16 @@
     app:startDestination="@id/nav_home">
 
     <fragment
-        android:id="@+id/fragmentAbout"
-        android:name="com.capstone.plasticwise.view.FragmentAbout"
+        android:id="@+id/nav_about"
+        android:name="com.capstone.plasticwise.view.AboutFragment"
         android:label="About"
         tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/nav_post"
+        android:name="com.capstone.plasticwise.view.PostFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_post" />
 
     <fragment
         android:id="@+id/nav_home"
