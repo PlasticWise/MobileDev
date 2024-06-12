@@ -60,7 +60,7 @@ class SignupFragment : Fragment() {
                                                 }
                                                 is Result.Success -> {
                                                     isLoading(false)
-                                                    MaterialAlertDialogBuilder(requireContext())
+                                                    MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
                                                         .setTitle("Success")
                                                         .setMessage("Account Created")
                                                         .setPositiveButton("Next") { dialog, _ ->

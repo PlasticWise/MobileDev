@@ -35,7 +35,7 @@
                 android:layout_marginTop="0dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Settings"
-                android:textColor="@android:color/black"
+                android:textColor="@color/blackPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </com.google.android.material.appbar.MaterialToolbar>
@@ -116,7 +116,7 @@
             android:text="About"
             android:textSize="16sp"
             android:fontFamily="@font/inter"
-            android:textColor="@android:color/white"
+            android:textColor="@color/whitePrimary"
             android:layout_marginStart="8dp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -144,7 +144,7 @@
             android:text="Appereance"
             android:textSize="16sp"
             android:fontFamily="@font/inter"
-            android:textColor="@android:color/white"
+            android:textColor="@color/whitePrimary"
             android:layout_marginStart="8dp"
             android:layout_weight="1"/>
         <Switch
@@ -155,6 +155,7 @@
             app:layout_constraintHorizontal_bias="0.32"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="352dp" />
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/layoutLogout"
@@ -181,7 +182,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:fontFamily="@font/inter"
-            android:textColor="@android:color/white"
+            android:textColor="@color/whitePrimary"
             android:layout_marginStart="8dp"
             android:layout_weight="1"/>
     </LinearLayout>

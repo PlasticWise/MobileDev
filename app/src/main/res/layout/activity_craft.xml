@@ -1,0 +1,132 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitePrimary"
+    tools:context=".view.CraftActivity">
+
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:background="@color/whitePrimary"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="Crafting"
+            android:textColor="@color/blackPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_next"
+            app:tint="@color/greenPrimary"
+            android:contentDescription="Back"
+            android:drawablePadding="8dp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scCraft"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/action_bar"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_sampah_welcome"
+                android:scaleType="centerCrop"
+                android:background="@drawable/white_rectangle"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="Tempat Pensil Lucu"
+                android:textColor="@color/greenPrimary"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="Bahan"
+                android:textColor="@color/blackPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:text="• Botol plastik bekas\n• Kain flanel\n• Kardus\n• Tali kur\n• Lem tembak\n• Gunting"
+                android:textColor="@color/blackPrimary"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="Cara Membuat"
+                android:textColor="@color/greenPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/greenPrimary"
+                android:fontFamily="@font/inter"
+                android:padding="7dp"
+                android:text="1. Potong kardus menjadi bentuk lingkaran;\n2. Lapisi dengan kain flanel, rekatkan dengan lem tembak;\n3. Potong botol menjadi beberapa ukuran sesuai dengan selera dan kebutuhan kamu;\n4. Lapisi juga dengan kain flanel;\n5. Susun kardus dan botol hingga menjadi sebuah bentuk tabung;\n6. Jangan lupa untuk merekatkan semua sisinya dengan erat;\n7. Tempat pensil lucu sudah jadi!"
+                android:textColor="@color/whiteSecondary"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"/>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/btnCraft"
+                android:backgroundTint="@color/greenPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:drawablePadding="8dp"
+                android:textColor="@color/whitePrimary"
+                android:text="Take Another"
+                app:iconTint="@color/whitePrimary"
+                app:icon="@drawable/ic_baseline_photo_camera_24" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

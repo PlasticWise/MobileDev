@@ -1,13 +1,15 @@
 package com.capstone.plasticwise.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.ViewModelFactory
@@ -23,18 +25,24 @@ class SettingsFragment : Fragment() {
         ViewModelFactory.getInstance(requireActivity())
     }
     private lateinit var auth: FirebaseAuth
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        sharedPreferences = requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
+
+        val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
+        binding.switchAppearance.isChecked = isDarkMode
+
         profileViewModel.getSession().observe(viewLifecycleOwner) { result ->
             val username = result.username
             binding.tvProfile.text = username
@@ -47,19 +55,28 @@ class SettingsFragment : Fragment() {
         }
 
         binding.layoutAbout.setOnClickListener {
-        val aboutFragment = AboutFragment()
-        val fragmentManager = parentFragmentManager
-        fragmentManager.beginTransaction().apply {
-            replace(
-                R.id.fragment_container,
-                aboutFragment,
-                AboutFragment::class.java.simpleName
+            val aboutFragment = AboutFragment()
+            val fragmentManager = parentFragmentManager
+            fragmentManager.beginTransaction().apply {
+                replace(
+                    R.id.fragment_container,
+                    aboutFragment,
+                    AboutFragment::class.java.simpleName
+                ).addToBackStack(null).commit()
+            }
+        }
+
+        binding.switchAppearance.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
+            AppCompatDelegate.setDefaultNightMode(
+                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
+                else AppCompatDelegate.MODE_NIGHT_NO
             )
         }
-        }
     }
+
     private fun logout() {
-       PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().clear().apply()
+        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().clear().apply()
         auth.signOut()
 
         val intent = Intent(requireContext(), WelcomeActivity::class.java)
@@ -68,7 +85,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showLogoutConfirmationDialog() {
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
             .setTitle("Confirmation Sign Out")
             .setMessage("Are you sure to Sign Out?")
             .setPositiveButton("Yes") { dialog, _ ->

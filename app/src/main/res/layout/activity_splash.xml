@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iconPicture"
         android:layout_marginTop="16dp"
-        android:text="Plastic Wise"
+        android:text="PlasticWise"
         android:textStyle="bold"
         android:textColor="@color/greenPrimary"
         android:textSize="24sp"
