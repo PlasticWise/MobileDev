@@ -16,6 +16,7 @@ import com.capstone.plasticwise.data.remote.ApiService
 import com.capstone.plasticwise.data.remote.ListStoryItem
 import com.capstone.plasticwise.data.remote.RegisterRequest
 import com.capstone.plasticwise.data.remote.RegisterResponse
+import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.data.remote.ResponseLogin
 import com.capstone.plasticwise.data.remote.ResponseStory
 import com.google.gson.Gson
@@ -58,17 +59,10 @@ class AuthenticationRepository private constructor(
         }
     }
 
-    fun responseCrafting() = liveData {
-        emit(Result.Loading)
-        try {
-            val successResponse = apiService.getAllCrafting()
-            emit(Result.Success(successResponse))
-            storyDatabase.craftingDao().insertCraft(successResponse)
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
-        }
+    suspend fun responseCrafting(): List<ResponseCraftingItem> {
+        val successResponse = apiService.getAllCrafting()
+        storyDatabase.craftingDao().insertCraft(successResponse)
+        return successResponse
     }
 
     fun getStory(): LiveData<PagingData<ListStoryItem>> {
@@ -84,6 +78,9 @@ class AuthenticationRepository private constructor(
         ).liveData
     }
 
+    suspend fun getAllCraftingFromLocal(): List<ResponseCraftingItem> {
+        return storyDatabase.craftingDao().getAllCraft()
+    }
 //    fun getPost() = liveData {
 //        emit(Result.Loading)
 //        try {

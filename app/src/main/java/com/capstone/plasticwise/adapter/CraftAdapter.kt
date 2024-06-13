@@ -7,15 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.capstone.plasticwise.data.remote.ListStoryItem
 import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.databinding.ItemCraftBinding
 import com.capstone.plasticwise.view.CraftActivity
-import com.capstone.plasticwise.view.DetailActivity
 
 class CraftAdapter : ListAdapter<ResponseCraftingItem, CraftAdapter.ListViewHolder>(DIFF_CALLBACK) {
-    class ListViewHolder(val binding : ItemCraftBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(listCraft : ResponseCraftingItem) {
+    class ListViewHolder(private val binding: ItemCraftBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(listCraft: ResponseCraftingItem) {
             Glide.with(itemView.context)
                 .load(listCraft.imageUrl)
                 .into(binding.iconImageView)
@@ -45,14 +43,9 @@ class CraftAdapter : ListAdapter<ResponseCraftingItem, CraftAdapter.ListViewHold
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(
-                oldItem: ResponseCraftingItem,
-                newItem: ResponseCraftingItem
-            ): Boolean {
-                return oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: ResponseCraftingItem, newItem: ResponseCraftingItem): Boolean {
+                return oldItem == newItem
             }
-
         }
     }
-
 }

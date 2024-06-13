@@ -13,5 +13,5 @@ interface CraftingDao {
     suspend fun insertCraft(craft: List<ResponseCraftingItem>)
 
     @Query("SELECT * FROM crafting_item")
-    fun getAllCraft(): Flow<List<ResponseCraftingItem>>
+    suspend fun getAllCraft(): List<ResponseCraftingItem>
 }
