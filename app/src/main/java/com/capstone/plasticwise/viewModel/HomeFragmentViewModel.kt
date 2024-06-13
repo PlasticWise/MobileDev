@@ -19,5 +19,7 @@ class HomeFragmentViewModel(private val repository: AuthenticationRepository) : 
     val story: LiveData<PagingData<ListStoryItem>> =
         repository.getStory().cachedIn(viewModelScope)
 
-    fun getCraft() = repository.getCraft()
+//    fun getCraft() = repository.getCraft()
+
+    fun getAllCrafting()  = repository.responseCrafting()
 }

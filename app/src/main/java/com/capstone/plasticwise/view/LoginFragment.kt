@@ -1,27 +1,21 @@
 package com.capstone.plasticwise.view
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.capstone.plasticwise.R
-import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.data.pref.UserModel
 import com.capstone.plasticwise.data.remote.ApiConfig
 import com.capstone.plasticwise.databinding.FragmentLoginBinding
 import com.capstone.plasticwise.di.Injection
 import com.capstone.plasticwise.viewModel.LoginViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
@@ -43,29 +37,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val user = auth.currentUser
-                        user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
-                            if (tokenTask.isSuccessful) {
-                                val idToken = tokenTask.result?.token
-                                Log.d("LOGINFRAGMENT", "User ID: $idToken")
-                            }
-                        }
-                        loginActivity(email, password)
-                    } else {
-                        showToast("Login failed: ${task.exception?.message}")
-                    }
-                }.addOnFailureListener {
-                    showToast("Login failed: ${it.message}")
-                    binding.passwordEditText.text?.clear()
-                    binding.emailEditText.text?.clear()
-                }
+                performLogin(email, password)
             } else {
                 showToast("Please fill all fields")
             }
@@ -75,7 +53,11 @@ class LoginFragment : Fragment() {
             val signupFragment = SignupFragment()
             val fragmentManager = requireActivity().supportFragmentManager
             fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, signupFragment, SignupFragment::class.java.simpleName)
+                .replace(
+                    R.id.fragment_container,
+                    signupFragment,
+                    SignupFragment::class.java.simpleName
+                )
                 .addToBackStack(null)
                 .commit()
         }
@@ -83,46 +65,41 @@ class LoginFragment : Fragment() {
         setupListener()
     }
 
-    private fun loginActivity(email : String, password : String) {
-        loginViewModel.login(email, password).observe(requireActivity()) { result ->
-            if (result!= null) {
-                when (result) {
-                    is Result.Loading -> {
-                        showLoading(true)
-                    }
-                    is Result.Success -> {
-                        showLoading(false)
-                        val token = result.data.loginResult.token
-                        val username = result.data.loginResult.name
-                        loginViewModel.saveSession(
-                            UserModel(
-                                email,
-                                token,
-                                username,
-                                true
+    private fun performLogin(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
+                        if (tokenTask.isSuccessful) {
+                            val idToken = tokenTask.result?.token.toString()
+                            Log.d("LOGIN FRAGMENT", "User ID: $idToken")
+                            loginViewModel.saveSession(
+                                UserModel(
+                                    email,
+                                    idToken,
+                                    user.displayName.toString(),
+                                    true
+                                )
                             )
-                        )
-                        val userRepository = Injection.provideRepository(requireActivity())
-                        userRepository.update(ApiConfig.getApiService(token))
-                        MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
-                            .setTitle("Login Success")
-                            .setMessage("Welcome ${result.data.loginResult.name}")
-                            .setPositiveButton("Next") { _, _ ->
-                                val intent =
-                                    Intent(requireActivity(), HomeActivity::class.java)
-                                startActivity(intent)
-                                requireActivity().finish()
-                            }
-                            .show()
+                            val userRepository = Injection.provideRepository(requireActivity())
+                            userRepository.update(ApiConfig.getApiService(idToken))
+                            showToast("Login success")
+                            val intent = Intent(requireActivity(), HomeActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        } else {
+                            showToast("Failed to retrieve ID token: ${tokenTask.exception?.message}")
+                        }
                     }
-                    is Result.Error -> {
-                        showLoading(false)
-                        showToast(result.error)
-                    }
+                } else {
+                    showToast("Login failed: ${task.exception?.message}")
                 }
+            }.addOnFailureListener {
+                showToast("Login failed: ${it.message}")
+                binding.passwordEditText.text?.clear()
+                binding.emailEditText.text?.clear()
             }
-        }
-
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -131,7 +108,6 @@ class LoginFragment : Fragment() {
         } else {
             binding.progressBar.visibility = View.GONE
         }
-
     }
 
     private fun setupListener() {

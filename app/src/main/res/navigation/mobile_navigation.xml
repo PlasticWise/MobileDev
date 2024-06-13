@@ -22,29 +22,14 @@
         android:name="com.capstone.plasticwise.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
-    <action
-        android:id="@+id/action_nav_home_to_nav_detect"
-        app:destination="@id/nav_detect" />
-
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.capstone.plasticwise.view.SettingsFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_settings">
-        <action
-            android:id="@+id/action_nav_settings_to_nav_about"
-            app:destination="@id/nav_about" />
-    </fragment>
-
+        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/nav_detect"
         android:name="com.capstone.plasticwise.view.DetectFragment"
         android:label="fragment_detect"
-        tools:layout="@layout/fragment_detect"/>
-    <action
-        android:id="@+id/action_nav_craft_to_nav_detect"
-        app:destination="@id/nav_detect" />
-    <fragment/>
-
-
+        tools:layout="@layout/fragment_detect" />
 </navigation>

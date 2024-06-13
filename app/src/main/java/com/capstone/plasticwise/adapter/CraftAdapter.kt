@@ -7,16 +7,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.data.remote.ListStoryItem
+import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.databinding.ItemCraftBinding
 
-class CraftAdapter : ListAdapter<ListStoryItem, CraftAdapter.ListViewHolder>(DIFF_CALLBACK) {
+class CraftAdapter : ListAdapter<ResponseCraftingItem, CraftAdapter.ListViewHolder>(DIFF_CALLBACK) {
     class ListViewHolder(val binding : ItemCraftBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(listCraft : ListStoryItem) {
+        fun bind(listCraft : ResponseCraftingItem) {
             Glide.with(itemView.context)
-                .load(listCraft.photoUrl)
+                .load(listCraft.imageUrl)
                 .into(binding.iconImageView)
 
-            binding.habitTitleTextView.text = listCraft.name
+            binding.habitTitleTextView.text = listCraft.title
         }
     }
 
@@ -31,14 +32,14 @@ class CraftAdapter : ListAdapter<ListStoryItem, CraftAdapter.ListViewHolder>(DIF
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
-            override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ResponseCraftingItem>() {
+            override fun areItemsTheSame(oldItem: ResponseCraftingItem, newItem: ResponseCraftingItem): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ListStoryItem,
-                newItem: ListStoryItem
+                oldItem: ResponseCraftingItem,
+                newItem: ResponseCraftingItem
             ): Boolean {
                 return oldItem.id == newItem.id
             }

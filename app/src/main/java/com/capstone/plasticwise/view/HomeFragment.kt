@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
@@ -52,7 +51,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         homeFragmentViewModel.getSession().observe(requireActivity()) { session ->
-
             val username = session.username
             binding.tvName.text = getString(R.string.user, username)
             Log.d("HomeFragment", "this name $username")
@@ -65,9 +63,6 @@ class HomeFragment : Fragment() {
 //        setupData()
 
         binding.rvHome.layoutManager = LinearLayoutManager(requireActivity())
-//        binding.btnCraft.setOnClickListener{
-//            findNavController(). navigate(R.id.action_nav_home_to_nav_detect)
-//        }
 
 //        playAnimation()
 
@@ -85,38 +80,6 @@ class HomeFragment : Fragment() {
 //        trailingIcon.layoutParams = layoutParams
 //        binding.searchBar.addView(trailingIcon)
     }
-
-//    private fun setupBarChart() {
-//        var barChart = binding.barChart
-//        barChart = barChart1
-//
-//        val list: ArrayList<BarEntry> = ArrayList()
-//
-//        list.add(BarEntry(356.37f, 356.37f, "Filipina"))
-//        list.add(BarEntry(126.51f, 126.51f, "India"))
-//        list.add(BarEntry(73.1f, 73.1f, "Malaysia"))
-//        list.add(BarEntry(70.71f, 70.71f, "China"))
-//        list.add(BarEntry(56.33f, 56.33f, "Indonesia"))
-//        list.add(BarEntry(37.8f, 37.8f, "Brazil"))
-//        list.add(BarEntry(28.22f, 28.22f, "Vietnam"))
-//
-//        val barDataSet = BarDataSet(list, "Plastic Waste Spreads Mostly in the Sea")
-//
-//        barDataSet.setColors(ColorTemplate.JOYFUL_COLORS, 255)
-//
-//        barDataSet.valueTextColor = Color.BLUE
-//        barDataSet.valueTextSize = 15f
-//
-//        val barData = BarData(barDataSet)
-//
-//        barChart.setFitBars(true)
-//
-//        barChart.data = barData
-//
-//        barChart.description.text = ""
-//
-//        barChart.animateY(2000)
-//    }
 
     private fun setupPieChart() {
 
@@ -136,7 +99,7 @@ class HomeFragment : Fragment() {
 
         pieDataSet.valueTextColor = Color.BLUE
 
-        val pieData = PieData(pieDataSet)
+//        val pieData = PieData(pieDataSet)
 
         pieChart.data = PieData(pieDataSet)
 
@@ -152,7 +115,7 @@ class HomeFragment : Fragment() {
         craftAdapter = CraftAdapter()
         binding.rvHome.adapter = craftAdapter
 
-        homeFragmentViewModel.getCraft().observe(viewLifecycleOwner) { result ->
+        homeFragmentViewModel.getAllCrafting().observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
@@ -166,6 +129,7 @@ class HomeFragment : Fragment() {
 
                     is Result.Error -> {
                         showToast(result.error)
+                        Log.d("HomeFragment", result.error)
                     }
                 }
             }

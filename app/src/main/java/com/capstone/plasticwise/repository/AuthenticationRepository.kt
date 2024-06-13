@@ -14,6 +14,7 @@ import com.capstone.plasticwise.data.pref.UserModel
 import com.capstone.plasticwise.data.pref.UserPreference
 import com.capstone.plasticwise.data.remote.ApiService
 import com.capstone.plasticwise.data.remote.ListStoryItem
+import com.capstone.plasticwise.data.remote.RegisterRequest
 import com.capstone.plasticwise.data.remote.RegisterResponse
 import com.capstone.plasticwise.data.remote.ResponseLogin
 import com.capstone.plasticwise.data.remote.ResponseStory
@@ -54,6 +55,18 @@ class AuthenticationRepository private constructor(
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ResponseLogin::class.java)
             emit(Result.Error(errorResponse.message))
+        }
+    }
+
+    fun responseCrafting() = liveData {
+        emit(Result.Loading)
+        try {
+            val successResponse = apiService.getAllCrafting()
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
         }
     }
 
@@ -119,10 +132,13 @@ class AuthenticationRepository private constructor(
             emit(Result.Error(errorResponse.message.toString()))
         }
     }
-    fun register(name: String, email: String, password: String) = liveData {
+    fun register(email: String, displayName: String, password: String) = liveData {
         emit(Result.Loading)
         try {
-            val successResponse = apiService.register(name, email, password)
+            val emailRequestBody = email.toRequestBody("multipart/form-data".toMediaType())
+            val displayNameRequestBody = displayName.toRequestBody("multipart/form-data".toMediaType())
+            val passwordRequestBody = password.toRequestBody("multipart/form-data".toMediaType())
+            val successResponse = apiService.register(emailRequestBody, displayNameRequestBody, passwordRequestBody)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()

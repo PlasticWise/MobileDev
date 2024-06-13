@@ -1,23 +1,13 @@
 {
   "project_info": {
-<<<<<<< HEAD
     "project_number": "138320480511",
     "project_id": "plasticwise-server",
     "storage_bucket": "plasticwise-server.appspot.com"
-=======
-    "project_number": "96223230461",
-    "project_id": "plasticwise-45a48",
-    "storage_bucket": "plasticwise-45a48.appspot.com"
->>>>>>> origin/dev_haikal
   },
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
         "mobilesdk_app_id": "1:138320480511:android:21797ca9c66ff0784fa4ca",
-=======
-        "mobilesdk_app_id": "1:96223230461:android:74e7a461949164b720c194",
->>>>>>> origin/dev_haikal
         "android_client_info": {
           "package_name": "com.capstone.plasticwise"
         }
@@ -25,11 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-<<<<<<< HEAD
           "current_key": "AIzaSyAzqTSQxRofgfKPgEoWgI6dZj1eneqPtrA"
-=======
-          "current_key": "AIzaSyAcaO4eFjqtC6jzMXcXN_JlDd1YZJOEEh0"
->>>>>>> origin/dev_haikal
         }
       ],
       "services": {
