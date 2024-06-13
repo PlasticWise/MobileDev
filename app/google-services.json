@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "138320480511",
     "project_id": "plasticwise-server",
-    "storage_bucket": "plasticwise-server.appspot.com"
+    "storage_bucket": "plasticwise-storage"
   },
   "client": [
     {

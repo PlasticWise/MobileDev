@@ -1,7 +1,13 @@
 package com.capstone.plasticwise.data.remote
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.capstone.plasticwise.utils.Converters
 import com.google.gson.annotations.SerializedName
 
+@TypeConverters(Converters::class)
+@Entity(tableName = "crafting_item")
 data class ResponseCraftingItem(
 	@SerializedName("createdAt")
 	val createdAt: String,
@@ -15,6 +21,7 @@ data class ResponseCraftingItem(
 	@SerializedName("imageUrl")
 	val imageUrl: String,
 
+	@PrimaryKey
 	@SerializedName("id")
 	val id: String,
 

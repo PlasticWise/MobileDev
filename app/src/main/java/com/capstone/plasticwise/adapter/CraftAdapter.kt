@@ -1,5 +1,6 @@
 package com.capstone.plasticwise.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,8 @@ import com.bumptech.glide.Glide
 import com.capstone.plasticwise.data.remote.ListStoryItem
 import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.databinding.ItemCraftBinding
+import com.capstone.plasticwise.view.CraftActivity
+import com.capstone.plasticwise.view.DetailActivity
 
 class CraftAdapter : ListAdapter<ResponseCraftingItem, CraftAdapter.ListViewHolder>(DIFF_CALLBACK) {
     class ListViewHolder(val binding : ItemCraftBinding): RecyclerView.ViewHolder(binding.root) {
@@ -18,6 +21,11 @@ class CraftAdapter : ListAdapter<ResponseCraftingItem, CraftAdapter.ListViewHold
                 .into(binding.iconImageView)
 
             binding.habitTitleTextView.text = listCraft.title
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, CraftActivity::class.java)
+                intent.putExtra(CraftActivity.EXTRA_ID, listCraft.id)
+                itemView.context.startActivity(intent)
+            }
         }
     }
 

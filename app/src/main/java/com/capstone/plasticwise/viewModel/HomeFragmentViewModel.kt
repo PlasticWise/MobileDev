@@ -3,11 +3,14 @@ package com.capstone.plasticwise.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.capstone.plasticwise.Result
 import androidx.paging.cachedIn
 import com.capstone.plasticwise.data.pref.UserModel
 import com.capstone.plasticwise.data.remote.ListStoryItem
+import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.repository.AuthenticationRepository
 
 class HomeFragmentViewModel(private val repository: AuthenticationRepository) : ViewModel() {
@@ -19,7 +22,11 @@ class HomeFragmentViewModel(private val repository: AuthenticationRepository) : 
     val story: LiveData<PagingData<ListStoryItem>> =
         repository.getStory().cachedIn(viewModelScope)
 
-//    fun getCraft() = repository.getCraft()
+//    fun getCraft() = repository.getCraft
+
+
+
+
 
     fun getAllCrafting()  = repository.responseCrafting()
 }

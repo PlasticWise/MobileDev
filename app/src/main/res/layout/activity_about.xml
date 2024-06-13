@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitePrimary"
-    tools:context="view.FragmentAbout">
+    tools:context=".view.AboutActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/title_bar"
@@ -22,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/whitePrimary"
             android:minHeight="?attr/actionBarSize"
             app:titleTextColor="@android:color/black">
 

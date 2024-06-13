@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
         craftAdapter = CraftAdapter()
         binding.rvHome.adapter = craftAdapter
 
-        homeFragmentViewModel.getAllCrafting().observe(viewLifecycleOwner) { result ->
+        homeFragmentViewModel.crafting.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {

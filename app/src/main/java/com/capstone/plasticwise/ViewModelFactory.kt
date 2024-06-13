@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.plasticwise.di.Injection
 import com.capstone.plasticwise.repository.AuthenticationRepository
 import com.capstone.plasticwise.view.MapsViewModel
+import com.capstone.plasticwise.viewModel.CraftViewModel
 import com.capstone.plasticwise.viewModel.DetailViewModel
 import com.capstone.plasticwise.viewModel.HomeFragmentViewModel
 import com.capstone.plasticwise.viewModel.HomeViewModel
@@ -50,6 +51,9 @@ class ViewModelFactory(private val repository: AuthenticationRepository) :
 
             modelClass.isAssignableFrom(SplashScreenViewModel::class.java) -> {
                 SplashScreenViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(CraftViewModel::class.java) -> {
+                CraftViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown View Model class: " + modelClass.name)
         }

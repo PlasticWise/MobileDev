@@ -33,6 +33,14 @@ interface ApiService {
     @GET("crafting")
     suspend fun getAllCrafting() : List<ResponseCraftingItem>
 
+    @GET("crafting/{id}")
+    suspend fun getDetailCrafting(
+        @Path("id") id: String
+    ): ResponseCraftingItem
+
+    @GET("posts")
+    suspend fun getAllPosts() : ResponsePostUser
+
     @GET("stories")
     suspend fun getStories(
         @Query("page") page: Int = 1,

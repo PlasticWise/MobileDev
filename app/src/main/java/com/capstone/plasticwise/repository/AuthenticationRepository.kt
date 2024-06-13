@@ -63,6 +63,7 @@ class AuthenticationRepository private constructor(
         try {
             val successResponse = apiService.getAllCrafting()
             emit(Result.Success(successResponse))
+            storyDatabase.craftingDao().insertCraft(successResponse)
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
@@ -83,18 +84,18 @@ class AuthenticationRepository private constructor(
         ).liveData
     }
 
-    fun getPost() = liveData {
-        emit(Result.Loading)
-        try {
-            val successResponse = apiService.getStories()
-            val limitedResponse = successResponse.listStory.take(5)
-            emit(Result.Success(limitedResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
-        }
-    }
+//    fun getPost() = liveData {
+//        emit(Result.Loading)
+//        try {
+//            val successResponse = apiService.getStories()
+//            val limitedResponse = successResponse.listStory.take(5)
+//            emit(Result.Success(limitedResponse))
+//        } catch (e: HttpException) {
+//            val errorBody = e.response()?.errorBody()?.string()
+//            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+//            emit(Result.Error(errorResponse.message.toString()))
+//        }
+//    }
 
     fun getUserMap() = liveData {
         emit(Result.Loading)
@@ -120,18 +121,31 @@ class AuthenticationRepository private constructor(
         }
     }
 
-    fun getCraft() = liveData {
+    fun getDetailCrafting(id: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val successResponse = apiService.getStories()
-            val limitedResponse = successResponse.listStory.take(3)
-            emit(Result.Success(limitedResponse))
+            val successResponse = apiService.getDetailCrafting(id)
+            emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
             emit(Result.Error(errorResponse.message.toString()))
         }
     }
+
+
+//    fun getCraft() = liveData {
+//        emit(Result.Loading)
+//        try {
+//            val successResponse = apiService.getStories()
+//            val limitedResponse = successResponse.listStory.take(3)
+//            emit(Result.Success(limitedResponse))
+//        } catch (e: HttpException) {
+//            val errorBody = e.response()?.errorBody()?.string()
+//            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+//            emit(Result.Error(errorResponse.message.toString()))
+//        }
+//    }
     fun register(email: String, displayName: String, password: String) = liveData {
         emit(Result.Loading)
         try {
