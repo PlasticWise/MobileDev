@@ -29,11 +29,10 @@
     <string name="crafting_signIn">Hello, Lets Crafting Again !</string>
     <string name="no_have_account">Don’t have an Account ?</string>
     <string name="sign_up"> Sign Up</string>
-    <string name="desc_signUp">Input your data, Turning Plastic Awareness into Action</string>
+    <string name="desc_signUp">Turning Plastic Awareness into Action</string>
     <string name="have_an_account">Have an Account ?</string>
     <string name="open_map">Open Map!</string>
     <string name="search">Search Idea...</string>
-
     <string name="forgot_password">Forgot Password ?</string>
     <string name="detect">Detect</string>
     <string name="input_your_image_for_result">Input Your Image For Result !</string>

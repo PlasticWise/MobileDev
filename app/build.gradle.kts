@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.activity)
+    implementation(libs.firebase.auth.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit.v115)
     androidTestImplementation(libs.androidx.espresso.core.v351)

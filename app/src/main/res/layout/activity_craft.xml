@@ -128,5 +128,9 @@
                 app:icon="@drawable/ic_baseline_photo_camera_24" />
         </LinearLayout>
     </ScrollView>
+    <FrameLayout
+        android:id="@+id/fragDetect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

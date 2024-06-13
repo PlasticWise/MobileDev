@@ -1,3 +1,4 @@
+// SettingsFragment.kt
 package com.capstone.plasticwise.view
 
 import android.content.Context
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.FragmentSettingsBinding
@@ -55,15 +57,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.layoutAbout.setOnClickListener {
-            val aboutFragment = AboutFragment()
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction().apply {
-                replace(
-                    R.id.fragment_container,
-                    aboutFragment,
-                    AboutFragment::class.java.simpleName
-                ).addToBackStack(null).commit()
-            }
+            findNavController().navigate(R.id.action_nav_settings_to_nav_about)
         }
 
         binding.switchAppearance.setOnCheckedChangeListener { _, isChecked ->
