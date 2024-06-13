@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "138320480511",
+    "project_id": "plasticwise-server",
+    "storage_bucket": "plasticwise-server.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138320480511:android:21797ca9c66ff0784fa4ca",
+        "android_client_info": {
+          "package_name": "com.capstone.plasticwise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzqTSQxRofgfKPgEoWgI6dZj1eneqPtrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
