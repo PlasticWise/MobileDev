@@ -4,7 +4,6 @@
         <shape android:shape="rectangle">
             <!-- Background color when pressed -->
             <solid android:color="@color/greenPrimary" />
-            <!-- Stroke color and width -->
             <stroke android:color="@color/greenPrimary" android:width="2dp" />
         </shape>
     </item>

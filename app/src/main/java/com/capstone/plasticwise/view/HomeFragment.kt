@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
@@ -57,13 +58,16 @@ class HomeFragment : Fragment() {
             Log.d("HomeFragment", "this name $username")
         }
 
-        Glide.with(requireActivity())
-            .load(R.drawable.ic_profile_user)
-            .circleCrop()
-            .into(binding.ivUser)
+//        Glide.with(requireActivity())
+//            .load(R.raw.anim_upload)
+//            .circleCrop()
+//            .into(binding.lottieAnimationView)
 //        setupData()
 
         binding.rvHome.layoutManager = LinearLayoutManager(requireActivity())
+//        binding.btnCraft.setOnClickListener{
+//            findNavController(). navigate(R.id.action_nav_home_to_nav_detect)
+//        }
 
 //        playAnimation()
 
@@ -126,7 +130,7 @@ class HomeFragment : Fragment() {
 
         val pieDataSet = PieDataSet(list, null)
 
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS, 255)
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS, 255)
         pieDataSet.valueTextSize = 10f
 
 

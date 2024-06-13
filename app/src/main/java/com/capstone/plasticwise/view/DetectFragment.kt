@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.databinding.FragmentDetectBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class DetectFragment : Fragment() {
 
@@ -76,6 +78,11 @@ class DetectFragment : Fragment() {
                     }
                 }
             }
+        }
+        val btnCraft: Button = view.findViewById(R.id.btnCraft)
+        btnCraft.setOnClickListener {
+            val intent = Intent(activity, CraftActivity::class.java)
+            startActivity(intent)
         }
     }
 

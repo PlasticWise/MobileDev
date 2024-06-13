@@ -1,12 +1,16 @@
 package com.capstone.plasticwise.view
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.capstone.plasticwise.R
@@ -100,10 +104,10 @@ class LoginFragment : Fragment() {
                         )
                         val userRepository = Injection.provideRepository(requireActivity())
                         userRepository.update(ApiConfig.getApiService(token))
-                        MaterialAlertDialogBuilder(requireActivity())
+                        MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
                             .setTitle("Login Success")
                             .setMessage("Welcome ${result.data.loginResult.name}")
-                            .setPositiveButton("Ok") { _, _ ->
+                            .setPositiveButton("Next") { _, _ ->
                                 val intent =
                                     Intent(requireActivity(), HomeActivity::class.java)
                                 startActivity(intent)

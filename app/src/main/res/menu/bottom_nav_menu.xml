@@ -9,7 +9,11 @@
         android:icon="@drawable/ic_scan"
         android:title="Detect" />
     <item
+        android:id="@+id/nav_post"
+        android:icon="@drawable/baseline_image_search_24"
+        android:title="Post" />
+    <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_person"
-        android:title="Profile" />
+        android:icon="@drawable/baseline_settings_24"
+        android:title="Settings" />
 </menu>
