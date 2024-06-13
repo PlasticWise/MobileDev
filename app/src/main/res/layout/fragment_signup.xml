@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitePrimary"
     tools:context=".view.SignupFragment">
 
     <ImageView
@@ -45,7 +46,7 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/inter_bold"
         android:text="@string/sign_up"
-        android:textColor="@color/green"
+
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,10 +59,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
         android:fontFamily="@font/inter"
+        android:textStyle="bold"
         android:text="@string/desc_signUp"
-        android:textColor="@color/green"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <LinearLayout
@@ -159,7 +159,7 @@
         app:layout_constraintTop_toBottomOf="@+id/containerEmail"
        >
 
-        <com.capstone.plasticwise.MyEmailText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -209,10 +209,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:boxStrokeColor="@drawable/stroke_text_input"
-        app:layout_constraintTop_toBottomOf="@+id/containerPassword"
->
+        app:layout_constraintTop_toBottomOf="@+id/containerPassword">
 
-        <com.capstone.plasticwise.MyPasswordText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -230,7 +229,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:textSize="20dp"
-        android:background="@drawable/white_rectangle"
+        android:textColor="@color/whitePrimary"
+        android:backgroundTint="@color/greenPrimary"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -254,7 +254,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
             android:text="@string/have_an_account"
-            android:textColor="@color/green"
+
             android:textSize="16sp" />
 
         <TextView

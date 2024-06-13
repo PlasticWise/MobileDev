@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="whitePrimary">#000</color>
+    <color name="whiteSecondary">#fff</color>
+    <color name="blackPrimary">#fff</color>
+    <color name="greenPrimary">#1A9435</color>
     <color name="green">#1A9435</color>
     <color name="green_frame">#1A9435</color>
-    <color name="md_theme_primary">#A0D49B</color>
+    <color name="md_theme_primary">#000</color>
     <color name="md_theme_onPrimary">#073910</color>
     <color name="md_theme_primaryContainer">#225025</color>
     <color name="md_theme_onPrimaryContainer">#BBF0B5</color>

@@ -7,7 +7,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -62,12 +62,25 @@ class UploadActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val categories = resources.getStringArray(R.array.categories_array)
+        val categoriesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerCategory.adapter = categoriesAdapter
+
+        val types = resources.getStringArray(R.array.types_array)
+        val typesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, types)
+        typesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerType.adapter = typesAdapter
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
 
         if (!allPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
@@ -79,7 +92,7 @@ class UploadActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         binding.btnGallery.setOnClickListener { startGallery() }
-//        binding.btnCamera.setOnClickListener { startCameraX() }
+        binding.btnCamera.setOnClickListener { startCameraX() }
 
         binding.btnUpload.setOnClickListener { uploadImage(0.0, 0.0) }
 
@@ -115,7 +128,6 @@ class UploadActivity : AppCompatActivity() {
         binding.btnCancel.setOnClickListener { cancelAction() }
     }
 
-
     private val requestPermissionLauncherLocation =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -130,7 +142,6 @@ class UploadActivity : AppCompatActivity() {
                 }
             }
         }
-
 
     private fun startCameraX() {
         val intent = Intent(this@UploadActivity, CameraActivity::class.java)
@@ -202,11 +213,14 @@ class UploadActivity : AppCompatActivity() {
             binding.ivUpload.setImageURI(it)
         }
     }
+
     private fun cancelAction() {
         binding.edtDescription.setText("")
         currentImageUri = null
-        binding.ivUpload.setImageResource(R.drawable.background_upload)
+        binding.ivUpload.setAnimation(R.raw.anim_upload)
+        binding.ivUpload.playAnimation()
     }
+
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }
