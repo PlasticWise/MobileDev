@@ -24,7 +24,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var auth: FirebaseAuth
 
-    private var isButton: Boolean = false
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +41,19 @@ class HomeActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        val homeFragment = HomeFragment()
-
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_home)
         navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.nav_home -> navView.menu.findItem(R.id.nav_home).isChecked = true
+                R.id.nav_post -> navView.menu.findItem(R.id.nav_post).isChecked = true
+                R.id.nav_detect -> navView.menu.findItem(R.id.nav_detect).isChecked = true
+                R.id.nav_profile -> navView.menu.findItem(R.id.nav_profile).isChecked = true
+                R.id.nav_about -> navView.menu.findItem(R.id.nav_about).isChecked = true
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

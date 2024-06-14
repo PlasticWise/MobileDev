@@ -130,6 +130,18 @@ class AuthenticationRepository private constructor(
         }
     }
 
+    fun getDetailCraftingByCategories(categories: String) = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val successResponse = apiService.getCraftingByCategories(categories)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        }
+    }
+
 
 //    fun getCraft() = liveData {
 //        emit(Result.Loading)
@@ -157,6 +169,27 @@ class AuthenticationRepository private constructor(
             emit((errorResponse.message.let { Result.Error(it) }))
         }
     }
+
+    fun detection(imageFile: File) = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "image", // Nama bagian seperti yang digunakan di Postman
+            imageFile.name,
+            requestImageFile
+        )
+        try {
+            val successResponse = apiService.detection(imageMultipart)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        } catch (e: Exception) {
+            emit(Result.Error("Terjadi kesalahan: ${e.message}"))
+        }
+    }
+
 
     fun uploadImage(imageFile: File, description: String, lat: Double, lon: Double) =
         liveData(Dispatchers.IO) {

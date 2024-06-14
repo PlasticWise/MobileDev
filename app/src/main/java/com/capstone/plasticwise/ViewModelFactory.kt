@@ -44,6 +44,9 @@ class ViewModelFactory(private val repository: AuthenticationRepository, private
             modelClass.isAssignableFrom(CraftViewModel::class.java) -> {
                 CraftViewModel(repository) as T
             }
+            modelClass.isAssignableFrom(DetectViewModel::class.java) -> {
+                DetectViewModel(repository) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

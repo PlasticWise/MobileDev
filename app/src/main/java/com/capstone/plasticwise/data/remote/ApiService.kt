@@ -30,6 +30,12 @@ interface ApiService {
         @Part("password") password: RequestBody
     ): ResponseRegister
 
+    @Multipart
+    @POST("detection")
+    suspend fun detection(
+        @Part image : MultipartBody.Part
+    ): ResponseDetection
+
     @GET("crafting")
     suspend fun getAllCrafting() : List<ResponseCraftingItem>
 
@@ -38,8 +44,14 @@ interface ApiService {
         @Path("id") id: String
     ): ResponseCraftingItem
 
+    @GET("crafting/categories/{categories}")
+    suspend fun getCraftingByCategories(
+        @Path("categories") categories: String
+    ): ResponseCraftingItem
+
     @GET("posts")
     suspend fun getAllPosts() : ResponsePostUser
+
 
     @GET("stories")
     suspend fun getStories(

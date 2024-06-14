@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
@@ -21,6 +23,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
 
@@ -49,6 +52,14 @@ class HomeFragment : Fragment() {
             Log.d("HomeFragment", "this name $username")
         }
 
+        binding.btnCraft.setOnClickListener{
+            (activity as HomeActivity).findViewById<BottomNavigationView>(R.id.nav_view)
+                .selectedItemId = R.id.nav_detect
+        }
+        Glide.with(this)
+            .load(R.drawable.ic_profile_user)
+            .circleCrop()
+            .into(binding.ivUser)
         binding.rvHome.layoutManager = LinearLayoutManager(requireActivity())
         setUpRecyclerView()
         setupPieChart()

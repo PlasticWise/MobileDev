@@ -2,15 +2,14 @@ package com.capstone.plasticwise.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
-import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
@@ -49,17 +48,34 @@ class CraftActivity : AppCompatActivity() {
                 .commit()
         }
 
+        val categories = intent.getStringExtra(EXTRA_CATEGORIES)
+
         val id = intent.getStringExtra(EXTRA_ID)
 
-        craftViewModel.getDetailCraft(id.toString()).observe(this) { result ->
+        if (categories != null) {
+            getDetailCraftByCategories(categories.toString())
+        } else {
+            getDetailCraftById(id.toString())
+        }
+
+
+//        binding.btnCraft.setOnClickListener{
+//            findNavController().navigate(R.id.action_nav_craft_to_nav_detect)
+//        }
+    }
+
+    private fun getDetailCraftByCategories(categories: String) {
+        craftViewModel.getDetailCraftByCategories(categories).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
-//                        showLoading(true)
+                        showToast("Loading..")
+                        showLoading(true)
                     }
 
                     is Result.Success -> {
-//                        showLoading(false)
+                        showToast("Success")
+                        showLoading(false)
                         val title = result.data.title
                         val tools = result.data.tools
                         val image = result.data.imageUrl
@@ -69,21 +85,63 @@ class CraftActivity : AppCompatActivity() {
                     }
 
                     is Result.Error -> {
-//                        showLoading(false)
-//                        showToast(result.error)
-                        Log.d("Craft Activity", result.error)
+                        showToast(result.error)
+                        showLoading(false)
                     }
                 }
             }
         }
 
-
-//        binding.btnCraft.setOnClickListener{
-//            findNavController().navigate(R.id.action_nav_craft_to_nav_detect)
-//        }
     }
 
-    private fun showDetail(title: String, tools: List<String>, image: String, equip: List<String>, howto: List<String>) {
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getDetailCraftById(id: String) {
+        craftViewModel.getDetailCraft(id).observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+
+                    is Result.Success -> {
+                        showLoading(false)
+                        val title = result.data.title
+                        val tools = result.data.tools
+                        val image = result.data.imageUrl
+                        val equip = result.data.equip
+                        val howto = result.data.howto
+                        showDetail(title, tools, image, equip, howto)
+                    }
+
+                    is Result.Error -> {
+                        showLoading(false)
+                        showToast(result.error)
+                        Log.d("Craft Activity", result.error)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+
+    }
+
+    private fun showDetail(
+        title: String,
+        tools: List<String>,
+        image: String,
+        equip: List<String>,
+        howto: List<String>
+    ) {
         binding.apply {
             tvTitleCraft.text = title
 
@@ -91,19 +149,20 @@ class CraftActivity : AppCompatActivity() {
             tvHowTo.text = formatListWithNumbers(howto)
 
         }
-            Glide.with(this)
-                .load(image)
-                .into(binding.ivCraft)
+        Glide.with(this)
+            .load(image)
+            .into(binding.ivCraft)
 
     }
 
     private fun formatListWithNumbers(list: List<String>): String {
-        return list.mapIndexed { index, item -> "${index + 1}. $item"}.joinToString("\n")
+        return list.mapIndexed { index, item -> "${index + 1}. $item" }.joinToString("\n")
 
     }
 
 
     companion object {
         const val EXTRA_ID = "extra_id"
+        const val EXTRA_CATEGORIES = "extra_categories"
     }
 }
