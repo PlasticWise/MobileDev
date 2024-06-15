@@ -106,10 +106,10 @@ class AuthenticationRepository private constructor(
         }
     }
 
-    fun getDetail(id: String) = liveData(Dispatchers.IO) {
+    fun getDetailPosts(id: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val successResponse = apiService.getDetailStories(id)
+            val successResponse = apiService.getDetailPosts(id)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()

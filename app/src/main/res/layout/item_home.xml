@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
     app:strokeColor="?attr/colorSecondary"
     app:strokeWidth="1dp"
@@ -16,7 +16,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/ivStory"
@@ -33,31 +34,88 @@
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingTop="8dp"
+            android:layout_marginTop="6dp"
             android:paddingBottom="4dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:fontFamily="@font/inter_bold"
+            android:fontFamily="@font/poppins_black"
             app:layout_constraintTop_toBottomOf="@+id/ivStory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="User Name" />
 
         <TextView
+            android:id="@+id/tvTypeContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type : "
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintStart_toEndOf="@+id/tvTypeContainer"
+            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+            tools:text="HDPE" />
+
+        <TextView
+            android:id="@+id/tvCategoriesContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories : "
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvCategories"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintStart_toEndOf="@+id/tvType"
+            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+            android:layout_marginStart="32dp" />
+
+        <TextView
+            android:id="@+id/tvCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginStart="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@+id/tvCategoriesContainer"
+            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+            tools:text="Botol Plastic" />
+
+
+        <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingTop="4dp"
             android:paddingBottom="8dp"
-            android:fontFamily="@font/inter"
             android:textSize="16sp"
             android:textStyle="normal"
             android:maxLines="2"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintTop_toBottomOf="@+id/tvTypeContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

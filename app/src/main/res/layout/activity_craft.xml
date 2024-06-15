@@ -83,6 +83,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
+                    android:visibility="gone"
+                    android:id="@+id/containerType"
+                    tools:visibility="visible"
                     android:text="Type :" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,7 +103,10 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Tools"
+                android:id="@+id/containerTools"
                 android:textColor="@color/blackPrimary"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -119,8 +125,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:id="@+id/containerEquip"
                 android:fontFamily="@font/inter_bold"
                 android:text="Equip"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:textColor="@color/blackPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -139,6 +148,9 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Cara Membuat"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/containerHowTo"
                 android:textColor="@color/greenPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />

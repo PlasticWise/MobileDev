@@ -2,11 +2,6 @@ package com.capstone.plasticwise.data.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponsePostUser(
-
-	@field:SerializedName("ResponsePostUser")
-	val responsePostUser: List<ResponsePostUserItem>
-)
 
 data class ResponsePostUserItem(
 

@@ -1,6 +1,8 @@
 package com.capstone.plasticwise.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.capstone.plasticwise.data.remote.ResponsePostUserItem
 import com.capstone.plasticwise.databinding.ItemHomeBinding
 import com.capstone.plasticwise.databinding.ItemPostBinding
+import com.capstone.plasticwise.view.DetailActivity
 import com.capstone.plasticwise.viewModel.PostViewModel
 
 class PostAdapter : ListAdapter<ResponsePostUserItem, PostAdapter.MyViewHolder>(DIFF_CALLBACK) {
@@ -17,10 +20,20 @@ class PostAdapter : ListAdapter<ResponsePostUserItem, PostAdapter.MyViewHolder>(
             binding.apply {
                 tvName.text = data.title
                 tvDescription.text = data.body
+                tvType.text = data.type
+                tvCategories.text = data.categories
+                tvTypeContainer.visibility = View.VISIBLE
+                tvCategoriesContainer.visibility = View.VISIBLE
             }
             Glide.with(itemView.context)
                 .load(data.imageUrl)
                 .into(binding.ivStory)
+
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_ID, data.id)
+                itemView.context.startActivity(intent)
+            }
         }
     }
 

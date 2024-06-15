@@ -50,7 +50,7 @@ interface ApiService {
     ): ResponseCraftingItem
 
     @GET("posts")
-    suspend fun getAllPosts() : ResponsePostUser
+    suspend fun getAllPosts() : List<ResponsePostUserItem>
 
 
     @GET("stories")
@@ -64,10 +64,10 @@ interface ApiService {
         @Query("location") location: Int = 1
     ): ResponseStory
 
-    @GET("stories/{id}")
-    suspend fun getDetailStories(
+    @GET("posts/{id}")
+    suspend fun getDetailPosts(
         @Path("id") id: String
-    ): ResponseDetail
+    ): ResponsePostUserItem
 
     @Multipart
     @POST("stories")

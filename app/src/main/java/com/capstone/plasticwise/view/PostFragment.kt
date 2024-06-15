@@ -63,19 +63,30 @@ class PostFragment : Fragment() {
             if (result!= null) {
                 when(result) {
                     is Result.Loading -> {
+                        showLoading(true)
                         showToast("Loading..")
                     }
                     is Result.Success -> {
                         showToast("Success...")
-                        val responsePost = result.data.responsePostUser
+                        showLoading(false)
+                        val responsePost = result.data
                         postAdapter.submitList(responsePost)
                     }
                     is Result.Error -> {
+                        showLoading(false)
                         showToast("Error...")
                     }
                 }
             }
         })
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     private fun showToast(message: String) {

@@ -45,18 +45,10 @@ class CraftActivity : AppCompatActivity() {
 
         val btnCraft = findViewById<Button>(R.id.btnCraft)
         btnCraft.setOnClickListener {
-//            val detectFragment = DetectFragment()
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragDetect, detectFragment)
-//                .commit()
-//            val navController = findNavController(R.id.nav_host_fragment_activity_home)
-//            navController.navigate(R.id.nav_detect)
-
             val intent = Intent(this, HomeActivity::class.java)
             intent.putExtra("navigate_to", "detectFragment")
             startActivity(intent)
             finish()
-
         }
 
         val categories = intent.getStringExtra(EXTRA_CATEGORIES)
@@ -162,7 +154,10 @@ class CraftActivity : AppCompatActivity() {
             tvEquip.text = formatListWithNumbers(equip)
             tvTools.text = formatListWithNumbers(tools)
             tvHowTo.text = formatListWithNumbers(howto)
-
+            containerType.visibility = View.VISIBLE
+            containerEquip.visibility = View.VISIBLE
+            containerTools.visibility = View.VISIBLE
+            containerHowTo.visibility = View.VISIBLE
         }
         Glide.with(this)
             .load(image)
