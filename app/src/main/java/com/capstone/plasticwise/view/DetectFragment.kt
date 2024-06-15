@@ -2,6 +2,7 @@ package com.capstone.plasticwise.view
 
 import android.Manifest
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -24,6 +26,8 @@ import com.capstone.plasticwise.databinding.FragmentDetectBinding
 import com.capstone.plasticwise.utils.reduceFileImage
 import com.capstone.plasticwise.utils.uriToFile
 import com.capstone.plasticwise.viewModel.DetectViewModel
+import com.yalantis.ucrop.UCrop
+import java.io.File
 import java.util.Locale
 
 class DetectFragment : Fragment() {
@@ -173,8 +177,26 @@ class DetectFragment : Fragment() {
             binding.ivDetect.setAnimation(R.raw.anim_empty)
         } else {
             currentImageUri?.let {
-                binding.ivDetect.setImageURI(it)
+                val destinationUri = Uri.fromFile(File(requireActivity().cacheDir, "croppedImage.jpg"))
+                UCrop.of(it, destinationUri)
+                    .withAspectRatio(1f,1f)
+                    .withMaxResultSize(800,800)
+                    .start(requireContext(), this)
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            val resultUri = UCrop.getOutput(data!!)
+            resultUri?.let {
+                binding.ivDetect.setImageURI(it)
+                currentImageUri= it
+            }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(data!!)
+            cropError?.printStackTrace()
         }
     }
 

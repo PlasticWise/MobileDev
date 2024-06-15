@@ -41,6 +41,9 @@
         <activity
             android:name=".view.HomeActivity"
             android:exported="true" />
+        <activity android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyPlasticWise" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">

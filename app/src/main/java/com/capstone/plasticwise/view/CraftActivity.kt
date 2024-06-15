@@ -1,5 +1,6 @@
 package com.capstone.plasticwise.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,12 +11,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.ActivityCraftBinding
 import com.capstone.plasticwise.viewModel.CraftViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CraftActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCraftBinding
@@ -42,10 +45,18 @@ class CraftActivity : AppCompatActivity() {
 
         val btnCraft = findViewById<Button>(R.id.btnCraft)
         btnCraft.setOnClickListener {
-            val detectFragment = DetectFragment()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragDetect, detectFragment)
-                .commit()
+//            val detectFragment = DetectFragment()
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragDetect, detectFragment)
+//                .commit()
+//            val navController = findNavController(R.id.nav_host_fragment_activity_home)
+//            navController.navigate(R.id.nav_detect)
+
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("navigate_to", "detectFragment")
+            startActivity(intent)
+            finish()
+
         }
 
         val categories = intent.getStringExtra(EXTRA_CATEGORIES)
@@ -81,7 +92,8 @@ class CraftActivity : AppCompatActivity() {
                         val image = result.data.imageUrl
                         val equip = result.data.equip
                         val howto = result.data.howto
-                        showDetail(title, tools, image, equip, howto)
+                        val type = result.data.type
+                        showDetail(title, tools, image, equip, howto, type)
                     }
 
                     is Result.Error -> {
@@ -113,7 +125,8 @@ class CraftActivity : AppCompatActivity() {
                         val image = result.data.imageUrl
                         val equip = result.data.equip
                         val howto = result.data.howto
-                        showDetail(title, tools, image, equip, howto)
+                        val type = result.data.type
+                        showDetail(title, tools, image, equip, howto, type)
                     }
 
                     is Result.Error -> {
@@ -140,11 +153,13 @@ class CraftActivity : AppCompatActivity() {
         tools: List<String>,
         image: String,
         equip: List<String>,
-        howto: List<String>
+        howto: List<String>,
+        type: String
     ) {
         binding.apply {
             tvTitleCraft.text = title
-
+            tvType.text = type
+            tvEquip.text = formatListWithNumbers(equip)
             tvTools.text = formatListWithNumbers(tools)
             tvHowTo.text = formatListWithNumbers(howto)
 

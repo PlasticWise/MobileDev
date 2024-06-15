@@ -5,22 +5,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.data.remote.ListStoryItem
+import com.capstone.plasticwise.data.remote.ResponsePostUserItem
 import com.capstone.plasticwise.databinding.ItemHomeBinding
 import com.capstone.plasticwise.view.DetailActivity
 
-class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : ListAdapter<ResponsePostUserItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(listItem : ListStoryItem) {
+        fun bind(listItem : ResponsePostUserItem) {
             Glide.with(itemView.context)
-                .load(listItem.photoUrl)
+                .load(listItem.imageUrl)
                 .into(binding.ivStory)
 
-            binding.tvName.text = listItem.name
-            binding.tvDescription.text = listItem.description
+            binding.tvName.text = listItem.title
+            binding.tvDescription.text = listItem.body
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)
@@ -43,14 +45,14 @@ class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>
     }
 
     companion object {
-        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<ListStoryItem>(){
-            override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<ResponsePostUserItem>(){
+            override fun areItemsTheSame(oldItem: ResponsePostUserItem, newItem: ResponsePostUserItem): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ListStoryItem,
-                newItem: ListStoryItem
+                oldItem: ResponsePostUserItem,
+                newItem: ResponsePostUserItem
             ): Boolean {
                 return oldItem.id == newItem.id
             }

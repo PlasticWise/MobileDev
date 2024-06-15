@@ -66,19 +66,40 @@
                 android:id="@+id/tvTitleCraft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/inter_bold"
                 android:textColor="@color/greenPrimary"
                 android:textSize="18sp"
                 tools:text="Tempat Pensil Lucu" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Type :" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="HDPE"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_marginStart="8dp"
+                    android:textStyle="bold"
+                    android:id="@+id/tvType" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Bahan"
+                android:text="Tools"
                 android:textColor="@color/blackPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -93,6 +114,25 @@
                 android:textSize="14sp"
                 tools:text="• Botol plastik bekas\n• Kain flanel\n• Kardus\n• Tali kur\n• Lem tembak\n• Gunting" />
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="Equip"
+                android:textColor="@color/blackPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvEquip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/blackPrimary"
+                android:textSize="14sp"
+                tools:text="• Botol plastik bekas\n• Kain flanel\n• Kardus\n• Tali kur\n• Lem tembak\n• Gunting" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

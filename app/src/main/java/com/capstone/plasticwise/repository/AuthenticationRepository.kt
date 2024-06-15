@@ -142,6 +142,18 @@ class AuthenticationRepository private constructor(
         }
     }
 
+    fun getAllPost() = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val successResponse = apiService.getAllPosts()
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        }
+    }
+
 
 //    fun getCraft() = liveData {
 //        emit(Result.Loading)

@@ -12,6 +12,8 @@ import com.capstone.plasticwise.view.UserActivity
 import com.capstone.plasticwise.view.WelcomeActivity
 import com.capstone.plasticwise.viewModel.SplashScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -47,10 +49,23 @@ class SplashActivity : AppCompatActivity() {
     private fun observeSession() {
         lifecycleScope.launch {
             delay(3000) // 3 second delay
-            if (auth.currentUser != null) {
+            val user = auth.currentUser
+            if (user != null) {
                 // Log to help debug
-                println("User is already logged in, navigating to HomeActivity")
-                navigateToHomeActivity()
+                user.getIdToken(true).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        println("User is already logged in, navigating to HomeActivity")
+                        navigateToHomeActivity()
+                    } else {
+                        val exception = task.exception
+                        if (exception is FirebaseAuthInvalidUserException || exception is FirebaseAuthInvalidCredentialsException) {
+                            navigateToUserActivity()
+                        } else {
+                            exception?.printStackTrace()
+                            navigateToUserActivity()
+                        }
+                    }
+                }
             } else {
                 // Log to help debug
                 println("No user logged in, navigating to UserActivity")
