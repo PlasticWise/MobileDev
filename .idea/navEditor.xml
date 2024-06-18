@@ -8,9 +8,26 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="action_nav_craft_to_nav_detect">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
                   <entry key="action_nav_home_to_nav_detect">
                     <value>
                       <LayoutPositions />
+                    </value>
+                  </entry>
+                  <entry key="homeFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                   <entry key="nav_about">
