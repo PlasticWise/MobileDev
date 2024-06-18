@@ -51,6 +51,8 @@
     <string name="tv_description">Unique Creations from Plastic Waste!</string>
     <string name="tv_desc1">Let\'s Crafting Your Waste!</string>
     <string name="title_chart">Percentage of Plastic Waste in Indonesia</string>
+    <string name="tv_Detect_Success">%1$s % %2$s</string>
+
 
 
     <string-array name="categories_array">

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitePrimary"
     tools:context=".view.HomeFragment">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/profile_bar"
         android:layout_width="match_parent"
@@ -22,7 +22,6 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/whitePrimary"
             android:minHeight="?attr/actionBarSize"
             app:titleTextColor="@android:color/black">
 
@@ -59,19 +58,15 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/lottieAnimationView"
-                    android:layout_width="65dp"
-                    android:layout_height="55dp"
-                    android:padding="0dp"
-                    android:visibility="visible"
+                <ImageView
+                    android:id="@+id/ivUser"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_profile_user"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:lottie_autoPlay="true"
-                    app:lottie_colorFilter="@color/greenPrimary"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/anim_avatar" />
-
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -204,9 +199,7 @@
                 android:id="@+id/btnCraft"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                app:iconTint="@color/whitePrimary"
-                android:backgroundTint="@color/greenPrimary"
-                android:textColor="@color/whitePrimary"
+                android:backgroundTint="@color/md_theme_onSecondary"
                 android:layout_gravity="center"
                 android:layout_marginBottom="24dp"
                 android:drawablePadding="8dp"

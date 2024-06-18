@@ -14,7 +14,9 @@ import com.capstone.plasticwise.data.pref.UserModel
 import com.capstone.plasticwise.data.pref.UserPreference
 import com.capstone.plasticwise.data.remote.ApiService
 import com.capstone.plasticwise.data.remote.ListStoryItem
+import com.capstone.plasticwise.data.remote.RegisterRequest
 import com.capstone.plasticwise.data.remote.RegisterResponse
+import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.data.remote.ResponseLogin
 import com.capstone.plasticwise.data.remote.ResponseStory
 import com.google.gson.Gson
@@ -57,6 +59,12 @@ class AuthenticationRepository private constructor(
         }
     }
 
+    suspend fun responseCrafting(): List<ResponseCraftingItem> {
+        val successResponse = apiService.getAllCrafting()
+        storyDatabase.craftingDao().insertCraft(successResponse)
+        return successResponse
+    }
+
     fun getStory(): LiveData<PagingData<ListStoryItem>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
@@ -70,18 +78,21 @@ class AuthenticationRepository private constructor(
         ).liveData
     }
 
-    fun getPost() = liveData {
-        emit(Result.Loading)
-        try {
-            val successResponse = apiService.getStories()
-            val limitedResponse = successResponse.listStory.take(5)
-            emit(Result.Success(limitedResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
-        }
+    suspend fun getAllCraftingFromLocal(): List<ResponseCraftingItem> {
+        return storyDatabase.craftingDao().getAllCraft()
     }
+//    fun getPost() = liveData {
+//        emit(Result.Loading)
+//        try {
+//            val successResponse = apiService.getStories()
+//            val limitedResponse = successResponse.listStory.take(5)
+//            emit(Result.Success(limitedResponse))
+//        } catch (e: HttpException) {
+//            val errorBody = e.response()?.errorBody()?.string()
+//            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+//            emit(Result.Error(errorResponse.message.toString()))
+//        }
+//    }
 
     fun getUserMap() = liveData {
         emit(Result.Loading)
@@ -95,10 +106,10 @@ class AuthenticationRepository private constructor(
         }
     }
 
-    fun getDetail(id: String) = liveData(Dispatchers.IO) {
+    fun getDetailPosts(id: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val successResponse = apiService.getDetailStories(id)
+            val successResponse = apiService.getDetailPosts(id)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
@@ -107,22 +118,62 @@ class AuthenticationRepository private constructor(
         }
     }
 
-    fun getCraft() = liveData {
+    fun getDetailCrafting(id: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val successResponse = apiService.getStories()
-            val limitedResponse = successResponse.listStory.take(3)
-            emit(Result.Success(limitedResponse))
+            val successResponse = apiService.getDetailCrafting(id)
+            emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
             emit(Result.Error(errorResponse.message.toString()))
         }
     }
-    fun register(name: String, email: String, password: String) = liveData {
+
+    fun getDetailCraftingByCategories(categories: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val successResponse = apiService.register(name, email, password)
+            val successResponse = apiService.getCraftingByCategories(categories)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        }
+    }
+
+    fun getAllPost() = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val successResponse = apiService.getAllPosts()
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        }
+    }
+
+
+//    fun getCraft() = liveData {
+//        emit(Result.Loading)
+//        try {
+//            val successResponse = apiService.getStories()
+//            val limitedResponse = successResponse.listStory.take(3)
+//            emit(Result.Success(limitedResponse))
+//        } catch (e: HttpException) {
+//            val errorBody = e.response()?.errorBody()?.string()
+//            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+//            emit(Result.Error(errorResponse.message.toString()))
+//        }
+//    }
+    fun register(email: String, displayName: String, password: String) = liveData {
+        emit(Result.Loading)
+        try {
+            val emailRequestBody = email.toRequestBody("multipart/form-data".toMediaType())
+            val displayNameRequestBody = displayName.toRequestBody("multipart/form-data".toMediaType())
+            val passwordRequestBody = password.toRequestBody("multipart/form-data".toMediaType())
+            val successResponse = apiService.register(emailRequestBody, displayNameRequestBody, passwordRequestBody)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
@@ -130,6 +181,27 @@ class AuthenticationRepository private constructor(
             emit((errorResponse.message.let { Result.Error(it) }))
         }
     }
+
+    fun detection(imageFile: File) = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "image", // Nama bagian seperti yang digunakan di Postman
+            imageFile.name,
+            requestImageFile
+        )
+        try {
+            val successResponse = apiService.detection(imageMultipart)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        } catch (e: Exception) {
+            emit(Result.Error("Terjadi kesalahan: ${e.message}"))
+        }
+    }
+
 
     fun uploadImage(imageFile: File, description: String, lat: Double, lon: Double) =
         liveData(Dispatchers.IO) {

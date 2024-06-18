@@ -2,43 +2,54 @@ package com.capstone.plasticwise.view
 
 import android.Manifest
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.capstone.plasticwise.R
+import com.capstone.plasticwise.Result
+import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.FragmentDetectBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.capstone.plasticwise.utils.reduceFileImage
+import com.capstone.plasticwise.utils.uriToFile
+import com.capstone.plasticwise.viewModel.DetectViewModel
+import com.yalantis.ucrop.UCrop
+import java.io.File
+import java.util.Locale
 
 class DetectFragment : Fragment() {
 
     private lateinit var binding: FragmentDetectBinding
-
     private var currentImageUri: Uri? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    private val detectViewModel by viewModels<DetectViewModel> {
+        ViewModelFactory.getInstance(requireActivity())
     }
 
-//    PERMISSION
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    // Permission
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
                 showToast("Permission granted")
-            }
-            else {
+            } else {
                 showToast("Permission denied")
             }
         }
@@ -48,12 +59,12 @@ class DetectFragment : Fragment() {
             requireActivity(),
             REQUIRED_PERMISSION
         ) == PackageManager.PERMISSION_GRANTED
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentDetectBinding.inflate(layoutInflater)
+    ): View {
+        binding = FragmentDetectBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -64,6 +75,7 @@ class DetectFragment : Fragment() {
         }
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnCamera.setOnClickListener { startCameraX() }
+        binding.btnDetect.setOnClickListener { detection() }
         binding.topAppBar.apply {
             setTitleTextColor(resources.getColor(R.color.green))
             setOnMenuItemClickListener { menuItem ->
@@ -72,22 +84,59 @@ class DetectFragment : Fragment() {
                         Toast.makeText(requireActivity(), "History", Toast.LENGTH_SHORT).show()
                         true
                     }
-
-                    else -> {
-                        false
-                    }
+                    else -> false
                 }
             }
         }
-        val btnCraft: Button = view.findViewById(R.id.btnCraft)
-        btnCraft.setOnClickListener {
-            val intent = Intent(activity, CraftActivity::class.java)
-            startActivity(intent)
-        }
     }
 
+    private fun detection() {
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, requireActivity()).reduceFileImage()
+            Log.d("DetectFragment", "detection: ${imageFile.path}")
+            detectViewModel.detection(imageFile).observe(viewLifecycleOwner, Observer { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        showToast("Loading...")
+                        showLoading(true)
+                    }
+                    is Result.Success -> {
+                        showToast("Success")
+                        showLoading(false)
+                        val confidence = result.data.confidence
+                        val roundedConfidence = String.format(Locale.US,"%.0f", confidence)
+                        val resultCraft = result.data.data.result
+                        binding.tvDetect.text = "$roundedConfidence % $resultCraft"
+                        binding.tvMessage.text = result.data.data.message
+                        binding.tvCraftNow.visibility = View.VISIBLE
+                        binding.btnCraft.visibility = View.VISIBLE
+                        binding.btnDetect.visibility = View.GONE
 
-//    MENDAPATKAN HASIL DARI CAMERAX
+                        binding.btnCraft.setOnClickListener {
+                            val intent = Intent(requireActivity(), CraftActivity::class.java)
+                            intent.putExtra(CraftActivity.EXTRA_CATEGORIES, resultCraft)
+                            startActivity(intent)
+                        }
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        showToast(result.error)
+                    }
+                }
+            })
+        } ?: showToast("No image selected")
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+
+    }
+
+    // CameraX Intent
     private val launcherIntentCameraX =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -107,22 +156,20 @@ class DetectFragment : Fragment() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    val launcherGallery =
+    private val launcherGallery =
         registerForActivityResult(
             ActivityResultContracts.PickVisualMedia()
-        ) {uri ->
+        ) { uri ->
             if (uri != null) {
                 currentImageUri = uri
                 showImage()
             } else {
                 showToast("No Media Selected")
             }
-
         }
 
     private fun showToast(message: String) {
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
-
     }
 
     private fun showImage() {
@@ -130,13 +177,30 @@ class DetectFragment : Fragment() {
             binding.ivDetect.setAnimation(R.raw.anim_empty)
         } else {
             currentImageUri?.let {
-                binding.ivDetect.setImageURI(it)
+                val destinationUri = Uri.fromFile(File(requireActivity().cacheDir, "croppedImage.jpg"))
+                UCrop.of(it, destinationUri)
+                    .withAspectRatio(1f,1f)
+                    .withMaxResultSize(800,800)
+                    .start(requireContext(), this)
             }
         }
     }
 
-    companion object {
-        private val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            val resultUri = UCrop.getOutput(data!!)
+            resultUri?.let {
+                binding.ivDetect.setImageURI(it)
+                currentImageUri= it
+            }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(data!!)
+            cropError?.printStackTrace()
+        }
     }
 
+    companion object {
+        const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+    }
 }

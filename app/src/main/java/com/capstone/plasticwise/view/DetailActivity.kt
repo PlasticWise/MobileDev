@@ -28,10 +28,14 @@ class DetailActivity : AppCompatActivity() {
                         showToast("Loading")
                     }
                     is Result.Success -> {
-                        val username = result.data.story?.name
-                        val photoUrl = result.data.story?.photoUrl
-                        val detail = result.data.story?.description
-                        showDetail(username, photoUrl, detail)
+                        showToast("Success")
+                        val username = result.data.title
+                        val photoUrl = result.data.imageUrl
+                        val detail = result.data.body
+                        val type = result.data.type
+                        val categories = result.data.categories
+                        val createdAt = result.data.createdAt
+                        showDetail(username, photoUrl, detail, type, categories, createdAt)
                     }
                     is Result.Error -> {
                         showToast(result.error)
@@ -41,10 +45,13 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showDetail(username: String?, photoUrl: String?, detail: String?) {
+    private fun showDetail(username: String?, photoUrl: String?, detail: String?, type:String?, categories: String?, createdAt: String?) {
         binding.apply {
             tvUser.text = username
             tvDescription.text = detail
+            tvType.text = type
+            tvCategories.text = categories
+            tvCreatedAt.text = createdAt
             Glide.with(this@DetailActivity)
                 .load(photoUrl)
                 .into(ivDetail)
@@ -54,8 +61,6 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
-
     }
 
     companion object {

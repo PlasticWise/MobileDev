@@ -45,6 +45,7 @@
 
     <action
         android:id="@+id/action_nav_craft_to_nav_detect"
-        app:destination="@id/nav_detect" />
-
+        app:destination="@id/nav_detect"
+        android:label="fragment_detect"
+        tools:layout="@layout/fragment_detect" />
 </navigation>

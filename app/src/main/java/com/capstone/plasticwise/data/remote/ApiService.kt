@@ -2,9 +2,11 @@ package com.capstone.plasticwise.data.remote
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -19,13 +21,37 @@ interface ApiService {
         @Field("password") password: String
     ): ResponseLogin
 
-    @FormUrlEncoded
+
+    @Multipart
     @POST("register")
     suspend fun register(
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String
-    ): RegisterResponse
+        @Part("email") email: RequestBody,
+        @Part("displayName") displayName: RequestBody,
+        @Part("password") password: RequestBody
+    ): ResponseRegister
+
+    @Multipart
+    @POST("detection")
+    suspend fun detection(
+        @Part image : MultipartBody.Part
+    ): ResponseDetection
+
+    @GET("crafting")
+    suspend fun getAllCrafting() : List<ResponseCraftingItem>
+
+    @GET("crafting/{id}")
+    suspend fun getDetailCrafting(
+        @Path("id") id: String
+    ): ResponseCraftingItem
+
+    @GET("crafting/categories/{categories}")
+    suspend fun getCraftingByCategories(
+        @Path("categories") categories: String
+    ): ResponseCraftingItem
+
+    @GET("posts")
+    suspend fun getAllPosts() : List<ResponsePostUserItem>
+
 
     @GET("stories")
     suspend fun getStories(
@@ -38,10 +64,10 @@ interface ApiService {
         @Query("location") location: Int = 1
     ): ResponseStory
 
-    @GET("stories/{id}")
-    suspend fun getDetailStories(
+    @GET("posts/{id}")
+    suspend fun getDetailPosts(
         @Path("id") id: String
-    ): ResponseDetail
+    ): ResponsePostUserItem
 
     @Multipart
     @POST("stories")
