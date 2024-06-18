@@ -10,7 +10,7 @@
     app:cardForegroundColor="@android:color/transparent"
     app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
     app:cardElevation="1dp"
-    app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+    app:cardBackgroundColor="@color/md_theme_onSecondary"
     app:rippleColor="?attr/colorOnSurfaceVariant"
     app:cardCornerRadius="8dp">
 

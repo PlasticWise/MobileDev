@@ -25,7 +25,7 @@ class AboutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnBack.setOnClickListener {
-            findNavController().navigateUp() // atau menggunakan requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
     }
 

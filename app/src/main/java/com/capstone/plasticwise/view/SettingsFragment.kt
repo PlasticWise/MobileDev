@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.FragmentSettingsBinding
@@ -55,8 +57,12 @@ class SettingsFragment : Fragment() {
         }
 
         binding.layoutAbout.setOnClickListener {
-            startActivity(Intent(requireActivity(), AboutActivity::class.java))
+           findNavController().navigate(R.id.action_nav_settings_to_nav_about)
         }
+        Glide.with(this)
+            .load(R.drawable.ic_profile_user)
+            .circleCrop()
+            .into(binding.ivUser)
 
         binding.switchAppearance.setOnCheckedChangeListener { _, isChecked ->
             sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
@@ -77,7 +83,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showLogoutConfirmationDialog() {
-        MaterialAlertDialogBuilder(requireContext(), R.style.CustomAlertDialog)
+        MaterialAlertDialogBuilder(requireContext(), androidx.appcompat.R.style.AlertDialog_AppCompat)
             .setTitle("Confirmation Sign Out")
             .setMessage("Are you sure to Sign Out?")
             .setPositiveButton("Yes") { dialog, _ ->

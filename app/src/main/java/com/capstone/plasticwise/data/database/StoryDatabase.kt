@@ -11,7 +11,7 @@ import com.capstone.plasticwise.utils.Converters
 
 @Database(
     entities = [ListStoryItem::class, RemoteKeys::class, ResponseCraftingItem::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
