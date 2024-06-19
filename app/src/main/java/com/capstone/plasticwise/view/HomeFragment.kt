@@ -1,5 +1,6 @@
 package com.capstone.plasticwise.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
@@ -34,6 +36,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var pieChart: PieChart
     private lateinit var craftAdapter: CraftAdapter
+
+    private lateinit var auth : FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +55,8 @@ class HomeFragment : Fragment() {
             binding.tvName.text = getString(R.string.user, username)
             Log.d("HomeFragment", "this name $username")
         }
+
+        auth = FirebaseAuth.getInstance()
 
         binding.btnCraft.setOnClickListener{
             (activity as HomeActivity).findViewById<BottomNavigationView>(R.id.nav_view)
@@ -96,7 +102,10 @@ class HomeFragment : Fragment() {
                     craftAdapter.submitList(limitedStories)
                 }
                 is Result.Error -> {
-                    showToast(result.error)
+                    showToast("Please Login Again")
+                    startActivity(Intent(requireActivity(), UserActivity::class.java))
+                    requireActivity().finish()
+                    auth.signOut()
                     Log.d("HomeFragment", result.error)
                 }
             }

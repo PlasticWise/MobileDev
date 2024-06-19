@@ -104,7 +104,7 @@ class DetectFragment : Fragment() {
                         showToast("Success")
                         showLoading(false)
                         val confidence = result.data.confidence
-                        val roundedConfidence = String.format(Locale.US,"%.0f", confidence)
+                        val roundedConfidence = String.format(Locale.US, "%.0f", confidence)
                         val resultCraft = result.data.data.result
                         binding.tvDetect.text = "$roundedConfidence % $resultCraft"
                         binding.tvMessage.text = result.data.data.message
@@ -142,7 +142,8 @@ class DetectFragment : Fragment() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == CameraActivity.CAMERAX_RESULT) {
-                currentImageUri = it.data?.getStringExtra(CameraActivity.EXTRA_CAMERAX_IMAGE)?.toUri()
+                currentImageUri =
+                    it.data?.getStringExtra(CameraActivity.EXTRA_CAMERAX_IMAGE)?.toUri()
                 showImage()
             }
         }
@@ -177,10 +178,11 @@ class DetectFragment : Fragment() {
             binding.ivDetect.setAnimation(R.raw.anim_empty)
         } else {
             currentImageUri?.let {
-                val destinationUri = Uri.fromFile(File(requireActivity().cacheDir, "croppedImage.jpg"))
+                val destinationUri =
+                    Uri.fromFile(File(requireActivity().cacheDir, "croppedImage.jpg"))
                 UCrop.of(it, destinationUri)
-                    .withAspectRatio(1f,1f)
-                    .withMaxResultSize(800,800)
+                    .withAspectRatio(1f, 1f)
+                    .withMaxResultSize(800, 800)
                     .start(requireContext(), this)
             }
         }
@@ -188,15 +190,28 @@ class DetectFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-            val resultUri = UCrop.getOutput(data!!)
-            resultUri?.let {
-                binding.ivDetect.setImageURI(it)
-                currentImageUri= it
+        if (requestCode == UCrop.REQUEST_CROP) {
+            when (resultCode) {
+                AppCompatActivity.RESULT_OK -> {
+                    val resultUri = UCrop.getOutput(data!!)
+                    resultUri?.let {
+                        binding.ivDetect.setImageURI(it)
+                        currentImageUri = it
+                    }
+                }
+
+                UCrop.RESULT_ERROR -> {
+                    val cropError = UCrop.getError(data!!)
+                    cropError?.printStackTrace()
+                    showToast("Crop error: ${cropError?.message}")
+                // Clear the image if cropping fails
+                }
+
+                AppCompatActivity.RESULT_CANCELED -> {
+                    showToast("Photo editing canceled")
+                // Clear the image if user cancels editing
+                }
             }
-        } else if (resultCode == UCrop.RESULT_ERROR) {
-            val cropError = UCrop.getError(data!!)
-            cropError?.printStackTrace()
         }
     }
 

@@ -43,6 +43,7 @@ class CraftActivity : AppCompatActivity() {
             finish()
         }
 
+
         val btnCraft = findViewById<Button>(R.id.btnCraft)
         btnCraft.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)

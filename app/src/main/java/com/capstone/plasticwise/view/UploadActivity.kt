@@ -26,6 +26,7 @@ import com.capstone.plasticwise.view.CameraActivity.Companion.EXTRA_CAMERAX_IMAG
 import com.capstone.plasticwise.viewModel.UploadViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
 
 class UploadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadBinding
@@ -33,6 +34,7 @@ class UploadActivity : AppCompatActivity() {
     private val uploadViewModel by viewModels<UploadViewModel> {
         ViewModelFactory.getInstance(this)
     }
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -68,6 +70,7 @@ class UploadActivity : AppCompatActivity() {
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = FirebaseAuth.getInstance()
         val categories = resources.getStringArray(R.array.categories_array)
         val categoriesAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
         categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -86,7 +89,12 @@ class UploadActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
         if (!permissionLocationGranted()) {
-            requestPermissionLauncherLocation.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION))
+            requestPermissionLauncherLocation.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
         }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -94,7 +102,7 @@ class UploadActivity : AppCompatActivity() {
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnCamera.setOnClickListener { startCameraX() }
 
-        binding.btnUpload.setOnClickListener { uploadImage() }
+        binding.btnUpload.setOnClickListener { uploadStory() }
 
         binding.switchFeature.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -112,7 +120,7 @@ class UploadActivity : AppCompatActivity() {
                             val lat = location.latitude
                             Log.d("Location", "onCreate: $lat $lon")
                             showToast("Feature enabled")
-                            binding.btnUpload.setOnClickListener { uploadImage() }
+                            binding.btnUpload.setOnClickListener { uploadImage(lat, lon) }
                         } else {
                             showToast("Location is null")
                         }
@@ -122,10 +130,45 @@ class UploadActivity : AppCompatActivity() {
                 }
             } else {
                 showToast("Feature disabled")
-                binding.btnUpload.setOnClickListener { uploadImage() }
+                binding.btnUpload.setOnClickListener { uploadImage(0.0, 0.0) }
             }
         }
         binding.btnCancel.setOnClickListener { cancelAction() }
+    }
+
+    private fun uploadStory() {
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, this).reduceFileImage()
+            Log.d("Image File", "show image: ${imageFile.path}")
+            val title = binding.edtTitle.text.toString()
+            val body = binding.edtDescription.text.toString()
+            val categories = binding.spinnerCategory.selectedItem.toString()
+            val type = binding.spinnerType.selectedItem.toString()
+            val authorId = auth.uid.toString()
+
+            uploadViewModel.uploadStory(imageFile, title, body, authorId, categories, type)
+                .observe(this) { result ->
+                    if (result != null) {
+                        when (result) {
+                            is Result.Loading -> {
+                                showToast("Loading...")
+                            }
+
+                            is Result.Success -> {
+                                showToast("Success")
+                                val intent = Intent(this@UploadActivity, HomeActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                            }
+
+                            is Result.Error -> {
+                                showToast(result.error)
+                            }
+                        }
+                    }
+                }
+        }
     }
 
     private val requestPermissionLauncherLocation =
@@ -157,27 +200,25 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage() {
+    private fun uploadImage(lat: Double, long: Double) {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
             Log.d("Image File", "show image: ${imageFile.path}")
-            val title = binding.edtTitle.text.toString()
-            val body = binding.edtDescription.text.toString()
-            val categories = binding.spinnerCategory.selectedItem.toString()
-            val type = binding.spinnerType.selectedItem.toString()
+            val description = binding.edtDescription.text.toString()
 
-            uploadViewModel.uploadImage(imageFile, title, body, categories, type).observe(this) { result ->
+            uploadViewModel.uploadImage(imageFile, description, lat, long).observe(this) { result ->
                 if (result != null) {
                     when (result) {
                         is Result.Loading -> {
                             showToast("Loading...")
-                            Log.d("Loading", "uploadImage:")
+                            Log.d("Loading", "uploadImage: $lat, $long")
                         }
 
                         is Result.Success -> {
                             showToast(result.data.message)
                             val intent = Intent(this@UploadActivity, HomeActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
                         }
 
@@ -189,7 +230,6 @@ class UploadActivity : AppCompatActivity() {
             }
         }
     }
-
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

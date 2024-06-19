@@ -155,7 +155,7 @@ class AuthenticationRepository private constructor(
     }
 
 
-//    fun getCraft() = liveData {
+    //    fun getCraft() = liveData {
 //        emit(Result.Loading)
 //        try {
 //            val successResponse = apiService.getStories()
@@ -171,14 +171,54 @@ class AuthenticationRepository private constructor(
         emit(Result.Loading)
         try {
             val emailRequestBody = email.toRequestBody("multipart/form-data".toMediaType())
-            val displayNameRequestBody = displayName.toRequestBody("multipart/form-data".toMediaType())
+            val displayNameRequestBody =
+                displayName.toRequestBody("multipart/form-data".toMediaType())
             val passwordRequestBody = password.toRequestBody("multipart/form-data".toMediaType())
-            val successResponse = apiService.register(emailRequestBody, displayNameRequestBody, passwordRequestBody)
+            val successResponse =
+                apiService.register(emailRequestBody, displayNameRequestBody, passwordRequestBody)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
             emit((errorResponse.message.let { Result.Error(it) }))
+        }
+    }
+
+    fun postUser(
+        imageFile: File,
+        title: String,
+        body: String,
+        authorId: String,
+        categories: String,
+        type: String
+    ) = liveData {
+        emit(Result.Loading)
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "file",
+            imageFile.name,
+            requestImageFile
+        )
+        try {
+            val titleRequestBody = title.toRequestBody("multipart/form-data".toMediaType())
+            val bodyRequestBody = body.toRequestBody("multipart/form-data".toMediaType())
+            val authorIdRequestBody = authorId.toRequestBody("multipart/form-data".toMediaType())
+            val categoriesRequestBody =
+                categories.toRequestBody("multipart/form-data".toMediaType())
+            val typeRequestBody = type.toRequestBody("multipart/form-data".toMediaType())
+            val successResponse = apiService.uploadPost(
+                imageMultipart,
+                titleRequestBody,
+                bodyRequestBody,
+                authorIdRequestBody,
+                categoriesRequestBody,
+                typeRequestBody
+            )
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
         }
     }
 
