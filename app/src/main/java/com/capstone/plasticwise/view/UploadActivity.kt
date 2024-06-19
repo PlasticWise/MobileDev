@@ -94,7 +94,7 @@ class UploadActivity : AppCompatActivity() {
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnCamera.setOnClickListener { startCameraX() }
 
-        binding.btnUpload.setOnClickListener { uploadImage(0.0, 0.0) }
+        binding.btnUpload.setOnClickListener { uploadImage() }
 
         binding.switchFeature.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -112,7 +112,7 @@ class UploadActivity : AppCompatActivity() {
                             val lat = location.latitude
                             Log.d("Location", "onCreate: $lat $lon")
                             showToast("Feature enabled")
-                            binding.btnUpload.setOnClickListener { uploadImage(lat, lon) }
+                            binding.btnUpload.setOnClickListener { uploadImage() }
                         } else {
                             showToast("Location is null")
                         }
@@ -122,7 +122,7 @@ class UploadActivity : AppCompatActivity() {
                 }
             } else {
                 showToast("Feature disabled")
-                binding.btnUpload.setOnClickListener { uploadImage(0.0, 0.0) }
+                binding.btnUpload.setOnClickListener { uploadImage() }
             }
         }
         binding.btnCancel.setOnClickListener { cancelAction() }
@@ -157,25 +157,27 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage(lat: Double, long: Double) {
+    private fun uploadImage() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
             Log.d("Image File", "show image: ${imageFile.path}")
-            val description = binding.edtDescription.text.toString()
+            val title = binding.edtTitle.text.toString()
+            val body = binding.edtDescription.text.toString()
+            val categories = binding.spinnerCategory.selectedItem.toString()
+            val type = binding.spinnerType.selectedItem.toString()
 
-            uploadViewModel.uploadImage(imageFile, description, lat, long).observe(this) { result ->
+            uploadViewModel.uploadImage(imageFile, title, body, categories, type).observe(this) { result ->
                 if (result != null) {
                     when (result) {
                         is Result.Loading -> {
                             showToast("Loading...")
-                            Log.d("Loading", "uploadImage: $lat, $long")
+                            Log.d("Loading", "uploadImage:")
                         }
 
                         is Result.Success -> {
                             showToast(result.data.message)
                             val intent = Intent(this@UploadActivity, HomeActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
                         }
 
@@ -187,6 +189,7 @@ class UploadActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

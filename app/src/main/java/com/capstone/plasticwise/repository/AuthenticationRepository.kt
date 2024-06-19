@@ -203,26 +203,41 @@ class AuthenticationRepository private constructor(
     }
 
 
-    fun uploadImage(imageFile: File, description: String, lat: Double, lon: Double) =
-        liveData(Dispatchers.IO) {
-            emit(Result.Loading)
-            val requestBody = description.toRequestBody("text/plain".toMediaType())
-            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
-                imageFile.name,
-                requestImageFile
-            )
-            try {
-                val successResponse = apiService.uploadImage(imageMultipart, requestBody, lat, lon)
-                emit(Result.Success(successResponse))
-            } catch (e: HttpException) {
-                val errorBody = e.response()?.errorBody()?.string()
-                val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-                emit(Result.Error(errorResponse.message.toString()))
-            }
-        }
+    fun uploadImage(
+        imageFile: File,
+        title: String,
+        body: String,
+        categories: String,
+        type: String,
+    ) = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        val titleBody = title.toRequestBody("text/plain".toMediaType())
+        val bodyBody = body.toRequestBody("text/plain".toMediaType())
+        val categoriesBody = categories.toRequestBody("text/plain".toMediaType())
+        val typeBody = type.toRequestBody("text/plain".toMediaType())
 
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val imagePart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "image",
+            imageFile.name,
+            requestImageFile
+        )
+
+        try {
+            val successResponse = apiService.uploadImage(
+                image = imagePart,
+                title = titleBody,
+                body = bodyBody,
+                categories = categoriesBody,
+                type = typeBody
+            )
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            emit(Result.Error(errorResponse.message.toString()))
+        }
+    }
     fun update(apiService: ApiService) {
         this.apiService = apiService
     }

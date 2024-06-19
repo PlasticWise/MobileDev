@@ -56,20 +56,32 @@
 
 
     <string-array name="categories_array">
-        <item>Plastic</item>
-        <item>Metal</item>
-        <item>Paper</item>
-        <item>Glass</item>
-        <item>Organic</item>
-        <item>Electronic</item>
+        <item>Bottle</item>
+        <item>Plastic Bag</item>
+        <item>Styrofoam</item>
+        <item>Pipe</item>
+        <item>Gallon</item>
+        <item>Container</item>
+        <item>Utensil</item>
+        <item>Packaging</item>
+        <item>Toy</item>
+        <item>Furniture</item>
+        <item>Film</item>
+        <item>Sheet</item>
+        <item>Fiber</item>
+        <item>Caps Lids</item>
+        <item>Foam</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="types_array">
-        <item>Recyclable</item>
-        <item>Non-Recyclable</item>
-        <item>Hazardous</item>
-        <item>Non-Hazardous</item>
-        <item>Bulk</item>
-        <item>Single Item</item>
+        <item>PETE</item>
+        <item>HDPE</item>
+        <item>V/PVC</item>
+        <item>LDPE</item>
+        <item>PP</item>
+        <item>PS</item>
+        <item>Other</item>
     </string-array>
+
 </resources>

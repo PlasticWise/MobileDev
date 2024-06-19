@@ -1,5 +1,6 @@
 package com.capstone.plasticwise.data.remote
 
+import com.capstone.plasticwise.model.FileUploadResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -69,12 +70,14 @@ interface ApiService {
         @Path("id") id: String
     ): ResponsePostUserItem
 
+
     @Multipart
-    @POST("stories")
+    @POST("posts")
     suspend fun uploadImage(
-        @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody,
-        @Part("lat") lat: Double,
-        @Part("lon") lon: Double
+        @Part image: MultipartBody.Part,
+        @Part("title") title: RequestBody,
+        @Part("body") body: RequestBody,
+        @Part("categories") categories: RequestBody,
+        @Part("type") type: RequestBody,
     ): FileUploadResponse
 }

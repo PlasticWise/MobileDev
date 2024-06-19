@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="PlasticWise">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-13T12:52:05.668949200Z">
+        <DropdownSelection timestamp="2024-06-19T09:59:54.207306900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\ASUS\.android\avd\Pixel_8_Pro_API_34_2.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\HP\.android\avd\4.7_WXGA_API_30.avd" />
             </handle>
           </Target>
         </DropdownSelection>

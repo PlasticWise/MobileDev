@@ -23,6 +23,8 @@ class StoryAdapter : ListAdapter<ResponsePostUserItem, StoryAdapter.MyViewHolder
 
             binding.tvName.text = listItem.title
             binding.tvDescription.text = listItem.body
+            binding.tvType.text =listItem.type
+            binding.tvCategories.text=listItem.categories
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)

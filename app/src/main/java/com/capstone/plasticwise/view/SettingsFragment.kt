@@ -57,8 +57,9 @@ class SettingsFragment : Fragment() {
         }
 
         binding.layoutAbout.setOnClickListener {
-           findNavController().navigate(R.id.action_nav_settings_to_nav_about)
+            startActivity(Intent(requireActivity(), AboutActivity::class.java))
         }
+
         Glide.with(this)
             .load(R.drawable.ic_profile_user)
             .circleCrop()
