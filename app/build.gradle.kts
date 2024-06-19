@@ -20,7 +20,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"https://plasticwise-be-test-ddrv5fqxha-uc.a.run.app/api/v1/\""
+        buildConfigField("String", "BASE_URL", "\"https://plasticwise-be-deploy-ddrv5fqxha-et.a.run.app/api/v1/\""
         )
     }
 

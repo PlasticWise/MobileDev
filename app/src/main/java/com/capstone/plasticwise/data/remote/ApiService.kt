@@ -36,6 +36,17 @@ interface ApiService {
         @Part image : MultipartBody.Part
     ): ResponseDetection
 
+    @Multipart
+    @POST("posts")
+    suspend fun uploadPost(
+        @Part image: MultipartBody.Part,
+        @Part ("title") title: RequestBody,
+        @Part ("body") body : RequestBody,
+        @Part ("authorId") authorId : RequestBody,
+        @Part ("categories") categories : RequestBody,
+        @Part ("type") type : RequestBody
+    ) : ResponsePosts
+
     @GET("crafting")
     suspend fun getAllCrafting() : List<ResponseCraftingItem>
 
