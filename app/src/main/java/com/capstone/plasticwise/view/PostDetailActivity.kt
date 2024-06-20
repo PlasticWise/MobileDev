@@ -35,7 +35,6 @@ class PostDetailActivity : AppCompatActivity() {
         binding = ActivityPostDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi ImageView dengan findViewById
         val ivPostDetail = findViewById<ImageView>(R.id.ivPostDetail)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         val fabUpdate = findViewById<FloatingActionButton>(R.id.fabUpdate)

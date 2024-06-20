@@ -18,10 +18,7 @@ import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.ActivityHomeBinding
 import com.capstone.plasticwise.viewModel.HomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 
 class HomeActivity : AppCompatActivity() {
     private val viewModel by viewModels<HomeViewModel> {
@@ -33,7 +30,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Load theme preference
         sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
         val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
         AppCompatDelegate.setDefaultNightMode(
@@ -46,8 +42,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-
-//        checkSession()
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_home)

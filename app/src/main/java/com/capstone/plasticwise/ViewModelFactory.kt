@@ -3,11 +3,21 @@ package com.capstone.plasticwise
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Update
 import com.capstone.plasticwise.di.Injection
 import com.capstone.plasticwise.repository.AuthenticationRepository
-import com.capstone.plasticwise.view.*
-import com.capstone.plasticwise.viewModel.*
+import com.capstone.plasticwise.viewModel.CraftViewModel
+import com.capstone.plasticwise.viewModel.DetailViewModel
+import com.capstone.plasticwise.viewModel.DetectViewModel
+import com.capstone.plasticwise.viewModel.HomeFragmentViewModel
+import com.capstone.plasticwise.viewModel.HomeViewModel
+import com.capstone.plasticwise.viewModel.LoginViewModel
+import com.capstone.plasticwise.viewModel.PostDetailActivityViewModel
+import com.capstone.plasticwise.viewModel.PostViewModel
+import com.capstone.plasticwise.viewModel.ProfileFragmentViewModel
+import com.capstone.plasticwise.viewModel.RegisterViewModel
+import com.capstone.plasticwise.viewModel.SplashScreenViewModel
+import com.capstone.plasticwise.viewModel.UpdateViewModel
+import com.capstone.plasticwise.viewModel.UploadViewModel
 
 class ViewModelFactory(private val repository: AuthenticationRepository, private val context: Context) :
     ViewModelProvider.NewInstanceFactory() {
@@ -68,7 +78,7 @@ class ViewModelFactory(private val repository: AuthenticationRepository, private
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: ViewModelFactory(
                     Injection.provideRepository(context),
-                    context.applicationContext // Pass the application context here
+                    context.applicationContext
                 ).also { INSTANCE = it }
             }
         }

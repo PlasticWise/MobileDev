@@ -3,12 +3,15 @@ package com.capstone.plasticwise.viewModel
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.data.pref.UserModel
 import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.repository.AuthenticationRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeFragmentViewModel(private val repository: AuthenticationRepository, private val context: Context) : ViewModel() {

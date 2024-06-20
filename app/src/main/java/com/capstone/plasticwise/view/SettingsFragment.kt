@@ -69,9 +69,6 @@ class SettingsFragment : Fragment() {
 
         setupRecyclerView()
 
-        // Dummy list of items for RecyclerView
-
-
         val gridLayoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.layoutManager = gridLayoutManager
 

@@ -3,7 +3,6 @@ package com.capstone.plasticwise.view
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log

@@ -7,11 +7,11 @@ import com.capstone.plasticwise.data.pref.UserModel
 import com.capstone.plasticwise.data.pref.UserPreference
 import com.capstone.plasticwise.data.remote.ApiService
 import com.capstone.plasticwise.data.remote.FileUploadResponse
-import com.capstone.plasticwise.data.remote.RegisterResponse
 import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.data.remote.ResponseDetection
 import com.capstone.plasticwise.data.remote.ResponsePostUserItem
 import com.capstone.plasticwise.data.remote.ResponsePosts
+import com.capstone.plasticwise.data.remote.ResponseRegister
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -137,7 +137,7 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
+            val errorResponse = Gson().fromJson(errorBody, ResponseRegister::class.java)
             emit((errorResponse.message.let { Result.Error(it) }))
         }
     }
@@ -217,7 +217,7 @@ class AuthenticationRepository private constructor(
         emit(Result.Loading)
         val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "image", // Nama bagian seperti yang digunakan di Postman
+            "image",
             imageFile.name,
             requestImageFile
         )
@@ -272,44 +272,6 @@ class AuthenticationRepository private constructor(
     fun update(apiService: ApiService) {
         this.apiService = apiService
     }
-
-//    fun updateUser(
-//        imageFile: File,
-//        title: String,
-//        body: String,
-//        authorId: String,
-//        categories: String,
-//        type: String
-//    ) = liveData {
-//        emit(Result.Loading)
-//        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-//        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-//            "file",
-//            imageFile.name,
-//            requestImageFile
-//        )
-//        try {
-//            val titleRequestBody = title.toRequestBody("multipart/form-data".toMediaType())
-//            val bodyRequestBody = body.toRequestBody("multipart/form-data".toMediaType())
-//            val authorIdRequestBody = authorId.toRequestBody("multipart/form-data".toMediaType())
-//            val categoriesRequestBody =
-//                categories.toRequestBody("multipart/form-data".toMediaType())
-//            val typeRequestBody = type.toRequestBody("multipart/form-data".toMediaType())
-//            val successResponse = apiService.updatePost(
-//                imageMultipart,
-//                titleRequestBody,
-//                bodyRequestBody,
-//                authorIdRequestBody,
-//                categoriesRequestBody,
-//                typeRequestBody
-//            )
-//            emit(Result.Success(successResponse))
-//        } catch (e: HttpException) {
-//            val errorBody = e.response()?.errorBody()?.string()
-//            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-//            emit(Result.Error(errorResponse.message.toString()))
-//        }
-//    }
 
     companion object {
         @Volatile

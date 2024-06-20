@@ -19,6 +19,12 @@ class CraftAdapter : ListAdapter<ResponseCraftingItem, CraftAdapter.ListViewHold
                 .into(binding.iconImageView)
 
             binding.habitTitleTextView.text = listCraft.title
+            binding.buttonDetail.setOnClickListener{
+                val intent = Intent(itemView.context, CraftActivity::class.java)
+                intent.putExtra(CraftActivity.EXTRA_ID, listCraft.id)
+                itemView.context.startActivity(intent)
+            }
+
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, CraftActivity::class.java)
                 intent.putExtra(CraftActivity.EXTRA_ID, listCraft.id)

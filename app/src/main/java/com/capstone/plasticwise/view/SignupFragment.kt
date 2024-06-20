@@ -15,7 +15,6 @@ import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.FragmentSignupBinding
 import com.capstone.plasticwise.viewModel.RegisterViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 

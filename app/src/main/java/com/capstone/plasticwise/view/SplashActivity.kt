@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.capstone.plasticwise.databinding.ActivitySplashBinding
 import com.capstone.plasticwise.view.HomeActivity
-import com.capstone.plasticwise.view.UserActivity
 import com.capstone.plasticwise.view.WelcomeActivity
 import com.capstone.plasticwise.viewModel.SplashScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -31,24 +30,19 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Load animations
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
 
-        // Initialize FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
-        // Start animations
         binding.iconPicture.startAnimation(fadeInAnimation)
         binding.splashText.startAnimation(fadeInAnimation)
 
-        // Observe session and navigate accordingly
         observeSession()
     }
 
     private fun observeSession() {
         lifecycleScope.launch {
-            delay(3000) // 3 second delay
+            delay(2500)
             val user = auth.currentUser
             if (user != null) {
                 // Log to help debug
