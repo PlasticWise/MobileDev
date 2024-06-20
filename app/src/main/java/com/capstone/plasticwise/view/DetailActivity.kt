@@ -1,25 +1,25 @@
 package com.capstone.plasticwise.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.ActivityDetailBinding
 import com.capstone.plasticwise.utils.DateFormatter
 import com.capstone.plasticwise.viewModel.DetailViewModel
 import com.google.firebase.auth.FirebaseAuth
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 class DetailActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityDetailBinding
+    private lateinit var binding: ActivityDetailBinding
     private val detailViewModel by viewModels<DetailViewModel> {
         ViewModelFactory.getInstance(this)
     }
-    private lateinit var auth : FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +31,20 @@ class DetailActivity : AppCompatActivity() {
 
         getDetail(id.toString())
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getDetail(id: String) {
-        detailViewModel.getDetail(id).observe(this) {result ->
-            if (result != null){
-                when(result) {
+        detailViewModel.getDetail(id).observe(this) { result ->
+            if (result != null) {
+                when (result) {
                     is Result.Loading -> {
                         showToast("Loading")
                     }
                     is Result.Success -> {
                         showToast("Success")
-                        val uid = auth.currentUser?.uid
                         val title = result.data.title
                         val photoUrl = result.data.imageUrl
                         val detail = result.data.body
@@ -59,19 +61,18 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun showDetail(username: String?, photoUrl: String?, detail: String?, type:String?, categories: String?, createdAt: String?) {
+    private fun showDetail(username: String?, photoUrl: String?, detail: String?, type: String?, categories: String?, createdAt: String?) {
         binding.apply {
             tvUser.text = username
-            tvDescription.text = detail
+            tvDescription.setIndentedText(detail ?: "")
             tvType.text = type
             tvCategories.text = categories
             tvCreatedAt.text = DateFormatter(createdAt)
             Glide.with(this@DetailActivity)
                 .load(photoUrl)
+                .transform(CenterCrop(), RoundedCornersTransformation(16, 0))
                 .into(ivDetail)
         }
-
     }
 
     private fun showToast(message: String) {
@@ -81,5 +82,4 @@ class DetailActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID = "extra_id"
     }
-
 }

@@ -7,37 +7,40 @@
     tools:context=".view.PostFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bar_title"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintBottom_toTopOf="@id/rvPost"
-        android:layout_marginStart="6dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="6dp">
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginTop="20dp"
-            android:minHeight="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <TextView
-                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginTop="0dp"
-                android:text="Post"
                 android:fontFamily="@font/inter_bold"
+                android:text="Post"
                 android:textColor="@color/blackPrimary"
                 android:textSize="20sp"
-                android:textStyle="bold" />
-        </com.google.android.material.appbar.MaterialToolbar>
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+            <ImageView
+                android:id="@+id/menu_overflow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_menu_24"
+                android:layout_gravity="end"
+                android:padding="12dp"
+                android:contentDescription="Menu"
+                android:onClick="showPopupMenu" />
+
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -48,10 +51,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginEnd="16dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddPost"

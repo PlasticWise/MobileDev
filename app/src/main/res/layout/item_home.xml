@@ -37,73 +37,63 @@
             android:paddingTop="8dp"
             android:layout_marginTop="6dp"
             android:paddingBottom="4dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:fontFamily="@font/poppins_black"
+            android:fontFamily="@font/inter_bold"
             app:layout_constraintTop_toBottomOf="@+id/ivStory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="User Name" />
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/tvTypeContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Type : "
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/inter"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/tvType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:layout_marginStart="6dp"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/inter"
             app:layout_constraintTop_toBottomOf="@+id/tvName"
             app:layout_constraintStart_toEndOf="@+id/tvTypeContainer"
-            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-            tools:text="HDPE" />
+            android:layout_marginTop="8dp"
+            tools:text="Type" />
 
         <TextView
             android:id="@+id/tvCategoriesContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Categories : "
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/tvCategories"
-            android:fontFamily="@font/poppins_medium"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
-            app:layout_constraintStart_toEndOf="@+id/tvType"
-            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-            android:layout_marginStart="32dp" />
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvTypeContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:id="@+id/tvCategories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:layout_marginStart="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:fontFamily="@font/poppins_medium"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
-            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvType"
             app:layout_constraintStart_toEndOf="@+id/tvCategoriesContainer"
-            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-            tools:text="Botol Plastic" />
-
+            android:layout_marginTop="8dp"
+            tools:text="Categories" />
 
         <TextView
             android:id="@+id/tvDescription"
@@ -111,14 +101,14 @@
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
             android:paddingBottom="8dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:maxLines="2"
-            android:fontFamily="@font/poppins_medium"
-            app:layout_constraintTop_toBottomOf="@+id/tvTypeContainer"
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategories"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
             tools:text="Description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

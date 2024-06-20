@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
@@ -48,6 +51,9 @@ class PostFragment : Fragment() {
             startActivity(intent)
         }
 
+        val menuOverflow = view.findViewById<ImageView>(R.id.menu_overflow)
+        menuOverflow.setOnClickListener { showPopupMenu(menuOverflow) }
+
 
         binding.rvPost.layoutManager = LinearLayoutManager(requireActivity())
 
@@ -55,6 +61,35 @@ class PostFragment : Fragment() {
 
     }
 
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(requireContext(), view)
+        popupMenu.menuInflater.inflate(R.menu.post_overflow_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.menu_list_view -> {
+                    changeRecyclerViewLayout(false)
+                    true
+                }
+                R.id.menu_grid_view -> {
+                    changeRecyclerViewLayout(true)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    private fun changeRecyclerViewLayout(isGridView: Boolean) {
+        val layoutManager = if (isGridView) {
+            GridLayoutManager(requireContext(), 2)
+        } else {
+            LinearLayoutManager(requireContext())
+        }
+        binding.rvPost.layoutManager = layoutManager
+    }
     private fun setupRecyclerView() {
         postAdapter = PostAdapter()
         binding.rvPost.adapter = postAdapter

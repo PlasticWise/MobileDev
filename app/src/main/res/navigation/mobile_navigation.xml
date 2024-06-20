@@ -11,11 +11,6 @@
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/nav_about"
-        android:name="com.capstone.plasticwise.view.AboutFragment"
-        android:label="About"
-        tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/nav_post"
@@ -28,9 +23,6 @@
         android:name="com.capstone.plasticwise.view.SettingsFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_settings">
-        <action
-            android:id="@+id/action_nav_settings_to_nav_about"
-            app:destination="@id/nav_about" />
     </fragment>
 
     <fragment

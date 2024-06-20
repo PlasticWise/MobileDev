@@ -59,7 +59,6 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_post -> navView.menu.findItem(R.id.nav_post).isChecked = true
                 R.id.nav_detect -> navView.menu.findItem(R.id.nav_detect).isChecked = true
                 R.id.nav_profile -> navView.menu.findItem(R.id.nav_profile).isChecked = true
-                R.id.nav_about -> navView.menu.findItem(R.id.nav_about).isChecked = true
             }
         }
 

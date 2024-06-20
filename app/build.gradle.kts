@@ -106,6 +106,10 @@ dependencies {
 //    GRAPH and Chart
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+//   Rounded Glide
+    implementation ("com.github.bumptech.glide:glide:4.13.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0")
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
 //    UCROP
     implementation ("com.github.yalantis:ucrop:2.2.8-native")
 }

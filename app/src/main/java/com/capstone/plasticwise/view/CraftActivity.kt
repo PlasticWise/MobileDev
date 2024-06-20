@@ -13,12 +13,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.ActivityCraftBinding
 import com.capstone.plasticwise.viewModel.CraftViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 class CraftActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCraftBinding
@@ -62,10 +64,6 @@ class CraftActivity : AppCompatActivity() {
             getDetailCraftById(id.toString())
         }
 
-
-//        binding.btnCraft.setOnClickListener{
-//            findNavController().navigate(R.id.action_nav_craft_to_nav_detect)
-//        }
     }
 
     private fun getDetailCraftByCategories(categories: String) {
@@ -160,10 +158,10 @@ class CraftActivity : AppCompatActivity() {
             containerTools.visibility = View.VISIBLE
             containerHowTo.visibility = View.VISIBLE
         }
-        Glide.with(this)
+        Glide.with(this@CraftActivity)
             .load(image)
+            .transform(CenterCrop(), RoundedCornersTransformation(16, 0))
             .into(binding.ivCraft)
-
     }
 
     private fun formatListWithNumbers(list: List<String>): String {

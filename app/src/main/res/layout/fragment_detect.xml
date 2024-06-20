@@ -6,38 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".view.DetectFragment">
 
-
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineDetect">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@id/ivDetect"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/black">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <TextView
-                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginTop="0dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Detect"
                 android:textColor="@color/blackPrimary"
                 android:textSize="20sp"
-                android:textStyle="bold" />
-        </com.google.android.material.appbar.MaterialToolbar>
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
 
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/ivDetect"
         android:layout_width="0dp"
@@ -66,6 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/guidelineDetect2" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -95,10 +92,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="6dp"
             android:fontFamily="@font/poppins_medium"
             android:textSize="12sp"
             android:textStyle="italic"
-            android:layout_marginBottom="6dp"
             app:layout_constraintBottom_toTopOf="@+id/tvCraftNow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDetect"
@@ -111,14 +108,15 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="You Can Craft Now!"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/guidelineDetect4"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -133,21 +131,21 @@
             style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:iconTint="@color/greenPrimary"
-            android:contentDescription="@string/camera"
-            android:backgroundTint="@color/md_theme_inverseOnSurface"
             android:layout_marginBottom="8dp"
-            app:icon="@drawable/ic_baseline_photo_camera_24" />
+            android:backgroundTint="@color/md_theme_inverseOnSurface"
+            android:contentDescription="@string/camera"
+            app:icon="@drawable/ic_baseline_photo_camera_24"
+            app:iconTint="@color/greenPrimary" />
 
         <Button
             android:id="@+id/btnGallery"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="wrap_content"
-            app:iconTint="@color/greenPrimary"
-            android:contentDescription="@string/gallery"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/md_theme_inverseOnSurface"
-            app:icon="@drawable/ic_baseline_image_24" />
+            android:contentDescription="@string/gallery"
+            app:icon="@drawable/ic_baseline_image_24"
+            app:iconTint="@color/greenPrimary" />
     </LinearLayout>
 
     <Button
@@ -163,16 +161,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineDetect4" />
+
     <Button
         android:id="@+id/btnCraft"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:visibility="gone"
         android:backgroundTint="@color/md_theme_onSurface"
         android:fontFamily="@font/inter_bold"
         android:text="Craft Now!"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +183,7 @@
         android:layout_height="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.13"
+        app:layout_constraintGuide_percent="0.09"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -224,15 +223,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:trackColor="@color/md_theme_onSurface"
-        android:id="@+id/progressBar"
         android:indeterminate="true"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="@color/md_theme_onSurface"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,42 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".view.UploadActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_bold"
-            android:text="Add Post"
-            android:textColor="@color/blackPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_back_ios_new_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:layout_gravity="start" />
 
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="60dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_next"
-            app:tint="@color/greenPrimary"
-            android:contentDescription="Back"
-            android:drawablePadding="8dp"
-            android:padding="8dp"
-         />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Post"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@color/blackPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -180,19 +177,6 @@
                     android:inputType="textMultiLine" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/switchFeature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/roboto"
-                android:text="@string/enable_location"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                app:thumbIcon="@drawable/ic_close" />
 
             <LinearLayout
                 android:layout_width="match_parent"
