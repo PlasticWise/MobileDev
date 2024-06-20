@@ -54,7 +54,6 @@
     <string name="tv_Detect_Success">%1$s % %2$s</string>
 
 
-
     <string-array name="categories_array">
         <item>Bottle</item>
         <item>Plastic Bag</item>

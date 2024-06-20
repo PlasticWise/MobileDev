@@ -1,11 +1,9 @@
 package com.capstone.plasticwise.view
 
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +51,10 @@ class SettingsFragment : Fragment() {
             val email = result.email
             binding.tvEmail.text = email
         }
+        Glide.with(this)
+            .load(R.drawable.ic_profile_user)
+            .circleCrop()
+            .into(binding.ivUser)
 
         binding.signOut.setOnClickListener {
             showLogoutConfirmationDialog()
@@ -62,10 +64,22 @@ class SettingsFragment : Fragment() {
             startActivity(Intent(requireActivity(), AboutActivity::class.java))
         }
 
-        Glide.with(this)
-            .load(R.drawable.ic_profile_user)
-            .circleCrop()
-            .into(binding.ivUser)
+        // Dummy list of items for RecyclerView
+        val itemList = listOf(
+            ItemPost(R.drawable.ic_profile_user),
+            ItemPost(R.drawable.ic_profile_user),
+            ItemPost(R.drawable.ic_profile_user),
+            ItemPost(R.drawable.ic_profile_user),
+            ItemPost(R.drawable.ic_profile_user),
+            ItemPost(R.drawable.ic_profile_user),
+            ItemPost(R.drawable.ic_profile_user)
+        )
+
+        val gridLayoutManager = GridLayoutManager(context, 2)
+        binding.recyclerView.layoutManager = gridLayoutManager
+
+        val adapter = ItemPostAdapter(requireContext(), itemList)
+        binding.recyclerView.adapter = adapter
 
         binding.switchAppearance.setOnCheckedChangeListener { _, isChecked ->
             sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
@@ -74,31 +88,15 @@ class SettingsFragment : Fragment() {
                 else AppCompatDelegate.MODE_NIGHT_NO
             )
         }
-
-        val gridLayoutManager = GridLayoutManager(context, 2)
-        binding.recyclerView.layoutManager = gridLayoutManager
-
-        val itemList = listOf(
-          ItemPost(R.drawable.ic_profile_user),
-          ItemPost(R.drawable.ic_profile_user),
-          ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-          ItemPost(R.drawable.ic_profile_user)
-        )
-
-        val adapter = ItemPostAdapter(itemList)
-        binding.recyclerView.adapter = adapter
     }
 
     private fun logout() {
-        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().clear().apply()
         auth.signOut()
 
         val intent = Intent(requireContext(), WelcomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun showLogoutConfirmationDialog() {
