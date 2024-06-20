@@ -66,10 +66,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun performLogin(email: String, password: String) {
+        showLoading(true)
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
+                    showLoading(false)
                     user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
                         if (tokenTask.isSuccessful) {
                             val idToken = tokenTask.result?.token.toString()

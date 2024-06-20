@@ -2,6 +2,7 @@ package com.capstone.plasticwise.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
@@ -106,11 +107,11 @@ class PostDetailActivity : AppCompatActivity() {
         if (result != null) {
             when (result) {
                 is Result.Loading -> {
-                    showToast("Loading")
+                    showLoading(true)
                 }
 
                 is Result.Success -> {
-                    showToast("Success")
+                    showLoading(false)
                     val intent = Intent(this, HomeActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
@@ -120,9 +121,19 @@ class PostDetailActivity : AppCompatActivity() {
 
                 is Result.Error -> {
                     showToast("Error")
+                    showLoading(false)
                 }
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+
     }
 
     private fun showToast(message: String) {

@@ -2,7 +2,6 @@ package com.capstone.plasticwise.view
 
 import android.Manifest
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -76,18 +75,6 @@ class DetectFragment : Fragment() {
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnCamera.setOnClickListener { startCameraX() }
         binding.btnDetect.setOnClickListener { detection() }
-//        binding.topAppBar.apply {
-//            setTitleTextColor(resources.getColor(R.color.green))
-//            setOnMenuItemClickListener { menuItem ->
-//                when (menuItem.itemId) {
-//                    R.id.history -> {
-//                        Toast.makeText(requireActivity(), "History", Toast.LENGTH_SHORT).show()
-//                        true
-//                    }
-//                    else -> false
-//                }
-//            }
-//        }
     }
 
     private fun detection() {

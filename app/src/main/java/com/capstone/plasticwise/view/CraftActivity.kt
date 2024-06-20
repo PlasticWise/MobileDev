@@ -11,7 +11,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.capstone.plasticwise.R
@@ -19,7 +18,6 @@ import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.databinding.ActivityCraftBinding
 import com.capstone.plasticwise.viewModel.CraftViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 class CraftActivity : AppCompatActivity() {

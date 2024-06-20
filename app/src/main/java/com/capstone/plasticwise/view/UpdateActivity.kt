@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -149,16 +150,32 @@ class UpdateActivity : AppCompatActivity() {
 
     private fun handleResult(result: Result<ResponsePostUserItem>) {
         when (result) {
-            is Result.Loading -> showToast("Loading")
+            is Result.Loading -> {
+                showToast("Loading")
+                showLoading(true)
+            }
             is Result.Success -> {
                 showToast("Success Update")
+                showLoading(false)
                 val intent = Intent(this, HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
             }
-            is Result.Error -> showToast("Error")
+            is Result.Error -> {
+                showLoading(false)
+                showToast("Error")
+            }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+
     }
 
     private fun startCameraX() {
