@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/inter_bold"
-                android:text="Cara Membuat"
+                android:text="Step"
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:id="@+id/containerHowTo"

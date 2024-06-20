@@ -169,40 +169,6 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage() {
-        currentImageUri?.let { uri ->
-            val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "show image: ${imageFile.path}")
-            val title = binding.edtTitle.text.toString()
-            val body = binding.edtDescription.text.toString()
-            val categories = binding.spinnerCategory.selectedItem.toString()
-            val type = binding.spinnerType.selectedItem.toString()
-
-            uploadViewModel.uploadImage(imageFile, title, body, categories, type).observe(this) { result ->
-                if (result != null) {
-                    when (result) {
-                        is Result.Loading -> {
-                            showToast("Loading...")
-                            Log.d("Loading", "uploadImage:")
-                        }
-
-                        is Result.Success -> {
-                            showToast(result.data.message)
-                            val intent = Intent(this@UploadActivity, HomeActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                        }
-
-                        is Result.Error -> {
-                            showToast(result.error)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

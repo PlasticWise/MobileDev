@@ -48,6 +48,17 @@ interface ApiService {
         @Part ("type") type : RequestBody
     ) : ResponsePosts
 
+//    @Multipart
+//    @POST("posts")
+//    suspend fun updatePost(
+//        @Part image: MultipartBody.Part,
+//        @Part ("title") title: RequestBody,
+//        @Part ("body") body : RequestBody,
+//        @Part ("authorId") authorId : RequestBody,
+//        @Part ("categories") categories : RequestBody,
+//        @Part ("type") type : RequestBody
+//    ) : ResponseUpdate
+
     @GET("crafting")
     suspend fun getAllCrafting() : List<ResponseCraftingItem>
 

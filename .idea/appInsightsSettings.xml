@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.capstone.plasticwise" />
-                  <option name="mobileSdkAppId" value="1:96223230461:android:74e7a461949164b720c194" />
-                  <option name="projectId" value="plasticwise-45a48" />
-                  <option name="projectNumber" value="96223230461" />
+                  <option name="mobileSdkAppId" value="1:138320480511:android:21797ca9c66ff0784fa4ca" />
+                  <option name="projectId" value="plasticwise-server" />
+                  <option name="projectNumber" value="138320480511" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

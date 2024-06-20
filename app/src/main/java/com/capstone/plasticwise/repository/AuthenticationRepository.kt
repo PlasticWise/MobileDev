@@ -282,6 +282,44 @@ class AuthenticationRepository private constructor(
         this.apiService = apiService
     }
 
+//    fun updateUser(
+//        imageFile: File,
+//        title: String,
+//        body: String,
+//        authorId: String,
+//        categories: String,
+//        type: String
+//    ) = liveData {
+//        emit(Result.Loading)
+//        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+//        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+//            "file",
+//            imageFile.name,
+//            requestImageFile
+//        )
+//        try {
+//            val titleRequestBody = title.toRequestBody("multipart/form-data".toMediaType())
+//            val bodyRequestBody = body.toRequestBody("multipart/form-data".toMediaType())
+//            val authorIdRequestBody = authorId.toRequestBody("multipart/form-data".toMediaType())
+//            val categoriesRequestBody =
+//                categories.toRequestBody("multipart/form-data".toMediaType())
+//            val typeRequestBody = type.toRequestBody("multipart/form-data".toMediaType())
+//            val successResponse = apiService.updatePost(
+//                imageMultipart,
+//                titleRequestBody,
+//                bodyRequestBody,
+//                authorIdRequestBody,
+//                categoriesRequestBody,
+//                typeRequestBody
+//            )
+//            emit(Result.Success(successResponse))
+//        } catch (e: HttpException) {
+//            val errorBody = e.response()?.errorBody()?.string()
+//            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+//            emit(Result.Error(errorResponse.message.toString()))
+//        }
+//    }
+
     companion object {
         @Volatile
         private var instance: AuthenticationRepository? = null
