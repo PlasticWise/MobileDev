@@ -1,26 +1,17 @@
 package com.capstone.plasticwise.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.data.database.StoryDatabase
-import com.capstone.plasticwise.data.database.StoryRemoteMediator
 import com.capstone.plasticwise.data.pref.UserModel
 import com.capstone.plasticwise.data.pref.UserPreference
 import com.capstone.plasticwise.data.remote.ApiService
-import com.capstone.plasticwise.data.remote.ListStoryItem
-import com.capstone.plasticwise.data.remote.RegisterRequest
+import com.capstone.plasticwise.data.remote.FileUploadResponse
 import com.capstone.plasticwise.data.remote.RegisterResponse
 import com.capstone.plasticwise.data.remote.ResponseCraftingItem
-import com.capstone.plasticwise.data.remote.ResponseLogin
+import com.capstone.plasticwise.data.remote.ResponseDetection
 import com.capstone.plasticwise.data.remote.ResponsePostUserItem
 import com.capstone.plasticwise.data.remote.ResponsePosts
-import com.capstone.plasticwise.data.remote.ResponseStory
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -55,18 +46,7 @@ class AuthenticationRepository private constructor(
         return successResponse
     }
 
-    fun getStory(): LiveData<PagingData<ListStoryItem>> {
-        @OptIn(ExperimentalPagingApi::class)
-        return Pager(
-            config = PagingConfig(
-                pageSize = 5
-            ),
-            remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
-            pagingSourceFactory = {
-                storyDatabase.storyDao().getAllStory()
-            }
-        ).liveData
-    }
+
 
     fun getAllPostsByAuthor(uid: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading)
@@ -212,14 +192,12 @@ class AuthenticationRepository private constructor(
         }
     }
 
-    fun updatePostUserById(id: String, imageFile: File, title: String, body: String, type: String, categories: String) = liveData(Dispatchers.IO){
+    fun updatePostUserById(id: String, imageFile: File?, title: String, body: String, type: String, categories: String) = liveData(Dispatchers.IO){
         emit(Result.Loading)
-        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "file",
-            imageFile.name,
-            requestImageFile
-        )
+        val imageMultipart = imageFile?.let {
+            val requestImageFile = it.asRequestBody("image/jpeg".toMediaType())
+            MultipartBody.Part.createFormData("file", it.name, requestImageFile)
+        }
         try {
             val titleRequestBody = title.toRequestBody("multipart/form-data".toMediaType())
             val bodyRequestBody = body.toRequestBody("multipart/form-data".toMediaType())
@@ -248,7 +226,7 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            val errorResponse = Gson().fromJson(errorBody, ResponseDetection::class.java)
             emit(Result.Error(errorResponse.message.toString()))
         } catch (e: Exception) {
             emit(Result.Error("Terjadi kesalahan: ${e.message}"))
@@ -287,7 +265,7 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
+            val errorResponse = Gson().fromJson(errorBody, FileUploadResponse::class.java)
             emit(Result.Error(errorResponse.message.toString()))
         }
     }

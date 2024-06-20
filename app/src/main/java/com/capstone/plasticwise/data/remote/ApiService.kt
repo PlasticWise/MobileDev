@@ -1,14 +1,9 @@
 package com.capstone.plasticwise.data.remote
 
 import retrofit2.http.DELETE
-import com.capstone.plasticwise.model.FileUploadResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -43,16 +38,6 @@ interface ApiService {
         @Part("type") type: RequestBody
     ): ResponsePosts
 
-//    @Multipart
-//    @POST("posts")
-//    suspend fun updatePost(
-//        @Part image: MultipartBody.Part,
-//        @Part ("title") title: RequestBody,
-//        @Part ("body") body : RequestBody,
-//        @Part ("authorId") authorId : RequestBody,
-//        @Part ("categories") categories : RequestBody,
-//        @Part ("type") type : RequestBody
-//    ) : ResponseUpdate
 
     @GET("posts/author/{uid}")
     suspend fun getAllPostsByAuthor(
@@ -71,7 +56,7 @@ interface ApiService {
     @PATCH("posts/{id}")
     suspend fun updatePostUserById(
         @Path("id") id: String,
-        @Part image: MultipartBody.Part,
+        @Part image: MultipartBody.Part?,
         @Part("title") title: RequestBody,
         @Part("body") body: RequestBody,
         @Part("categories") categories: RequestBody,
@@ -91,17 +76,6 @@ interface ApiService {
     @GET("posts")
     suspend fun getAllPosts(): List<ResponsePostUserItem>
 
-
-    @GET("stories")
-    suspend fun getStories(
-        @Query("page") page: Int = 1,
-        @Query("size") size: Int = 20
-    ): ResponseStory
-
-    @GET("stories")
-    suspend fun getStoriesLocation(
-        @Query("location") location: Int = 1
-    ): ResponseStory
 
     @GET("posts/{id}")
     suspend fun getDetailPosts(

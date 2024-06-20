@@ -8,12 +8,14 @@ class UpdateViewModel(private val repository: AuthenticationRepository) : ViewMo
 
     fun updateStory(
         id: String,
-        fileImage: File,
+        fileImage: File?,
         title: String,
         body: String,
         categories: String,
         type: String
     ) = repository.updatePostUserById(id, fileImage, title, body, type, categories)
+
+    fun getPostUser(id: String) = repository.getDetailPosts(id)
 
     fun uploadStory(
         fileImage: File,

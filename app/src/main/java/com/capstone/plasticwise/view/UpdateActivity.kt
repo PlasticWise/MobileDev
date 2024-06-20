@@ -3,9 +3,9 @@ package com.capstone.plasticwise.view
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -13,8 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
@@ -24,11 +22,15 @@ import com.capstone.plasticwise.databinding.ActivityUpdateBinding
 import com.capstone.plasticwise.utils.reduceFileImage
 import com.capstone.plasticwise.utils.uriToFile
 import com.capstone.plasticwise.viewModel.UpdateViewModel
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 
 class UpdateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateBinding
-    private var currentImageUri: Uri? = null
+    private var currentImageFile: File? = null
     private val updateViewModel by viewModels<UpdateViewModel> {
         ViewModelFactory.getInstance(this)
     }
@@ -47,7 +49,7 @@ class UpdateActivity : AppCompatActivity() {
     private fun allPermissionsGranted() =
         ContextCompat.checkSelfPermission(
             this,
-            UpdateActivity.REQUIRED_PERMISSION
+            Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,74 +77,89 @@ class UpdateActivity : AppCompatActivity() {
         binding.btnCancel.setOnClickListener { cancelAction() }
 
         if (!allPermissionsGranted()) {
-            requestPermissionLauncher.launch(UpdateActivity.REQUIRED_PERMISSION)
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
 
-        val image = intent.getStringExtra(PostDetailActivity.EXTRA_IMAGE)
-        val title = intent.getStringExtra(PostDetailActivity.EXTRA_TITLE)
-        val body = intent.getStringExtra(PostDetailActivity.EXTRA_BODY)
-        val type = intent.getStringExtra(PostDetailActivity.TYPE)
-        val categories1 = intent.getStringExtra(PostDetailActivity.CATEGORIES)
+        val imageUrl = intent.getStringExtra(EXTRA_IMAGE)
+        val title = intent.getStringExtra(EXTRA_TITLE)
+        val body = intent.getStringExtra(EXTRA_BODY)
+        val type = intent.getStringExtra(TYPE)
+        val categories1 = intent.getStringExtra(CATEGORIES)
 
         binding.edtDescription.setText(body)
         binding.edtTitle.setText(title)
         binding.spinnerCategory.setSelection(categories.indexOf(categories1))
         binding.spinnerType.setSelection(types.indexOf(type))
+
         Glide.with(this)
-            .load(image)
+            .load(imageUrl)
             .into(binding.ivUpload)
-//        currentImageUri = image?.toUri()
+
+        if (imageUrl != null) {
+            downloadImage(imageUrl,
+                onSuccess = { file ->
+                    currentImageFile = file
+                },
+                onError = { error ->
+                    showToast("Failed to download image: ${error.message}")
+                }
+            )
+        }
+    }
+
+    private fun downloadImage(
+        url: String,
+        onSuccess: (File) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val file = Glide.with(this@UpdateActivity)
+                    .asFile()
+                    .load(url)
+                    .submit()
+                    .get()
+
+                withContext(Dispatchers.Main) {
+                    onSuccess(file)
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    onError(e)
+                }
+            }
+        }
     }
 
     private fun updateStory() {
-        val image = intent.getStringExtra(PostDetailActivity.EXTRA_IMAGE)
-        val id = intent.getStringExtra(PostDetailActivity.EXTRA_ID).toString()
+        val id = intent.getStringExtra(EXTRA_ID).toString()
         val title = binding.edtTitle.text.toString()
         val body = binding.edtDescription.text.toString()
         val categories = binding.spinnerCategory.selectedItem.toString()
         val type = binding.spinnerType.selectedItem.toString()
-        if (image != null && currentImageUri == null) {
-            val imageUri = image.toUri()
-            if (imageUri.scheme == "file") {
-                val fileImage = uriToFile(imageUri, this)
-                updateViewModel.updateStory(id, fileImage, title, body, categories, type)
-                    .observe(this) { result ->
-                        handleResult(result)
-                    }
-            }
-        } else {
-            currentImageUri?.let { uri ->
-                val imageFile = uriToFile(uri, this).reduceFileImage()
-                updateViewModel.updateStory(id, imageFile, title, body, categories, type)
-                    .observe(this) { result ->
-                        handleResult(result)
-                    }
-            }
-        }
+
+        currentImageFile?.let { imageFile ->
+            val reducedImageFile = imageFile.reduceFileImage()
+            updateViewModel.updateStory(id, reducedImageFile, title, body, categories, type)
+                .observe(this) { result ->
+                    handleResult(result)
+                }
+        } ?: showToast("No image selected")
     }
 
     private fun handleResult(result: Result<ResponsePostUserItem>) {
-        if (result != null) {
-            when (result) {
-                is Result.Loading -> {
-                    showToast("Loading")
-                }
-
-                is Result.Success -> {
-                    showToast("Success Update")
-                    val intent = Intent(this, HomeActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                }
-
-                is Result.Error -> {
-                    showToast("Error")
-                }
+        when (result) {
+            is Result.Loading -> showToast("Loading")
+            is Result.Success -> {
+                showToast("Success Update")
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
             }
+            is Result.Error -> showToast("Error")
         }
     }
-
 
     private fun startCameraX() {
         val intent = Intent(this@UpdateActivity, CameraActivity::class.java)
@@ -151,10 +168,12 @@ class UpdateActivity : AppCompatActivity() {
 
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == CameraActivity.CAMERAX_RESULT) {
-            currentImageUri = it.data?.getStringExtra(CameraActivity.EXTRA_CAMERAX_IMAGE)?.toUri()
-            showImage()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.getStringExtra(CameraActivity.EXTRA_CAMERAX_IMAGE)?.let { imageUri ->
+                currentImageFile = File(imageUri)
+                showImage()
+            }
         }
     }
 
@@ -168,31 +187,32 @@ class UpdateActivity : AppCompatActivity() {
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
-    ) { uri: Uri? ->
-        if (uri != null) {
-            currentImageUri = uri
+    ) { uri ->
+        uri?.let {
+            currentImageFile = uriToFile(it, this).reduceFileImage()
             showImage()
-        } else {
-            Log.d("Photo Picker", "No media selected")
         }
     }
 
+    private val mainHandler = Handler(Looper.getMainLooper())
     private fun showImage() {
-        currentImageUri?.let {
-            Log.d("Image Uri", "showImage: $it")
-            binding.ivUpload.setImageURI(it)
+        currentImageFile?.let {
+            mainHandler.post {
+                Glide.with(this)
+                    .load(it)
+                    .into(binding.ivUpload)
+            }
         }
     }
 
     private fun cancelAction() {
         binding.edtDescription.setText("")
-        currentImageUri = null
+        currentImageFile = null
         binding.ivUpload.setAnimation(R.raw.anim_upload)
         binding.ivUpload.playAnimation()
     }
 
     companion object {
-        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
         const val EXTRA_IMAGE = "extra_image"
         const val EXTRA_TITLE = "extra_title"
         const val EXTRA_BODY = "extra_body"
@@ -201,5 +221,3 @@ class UpdateActivity : AppCompatActivity() {
         const val EXTRA_ID = "extra_id"
     }
 }
-
-

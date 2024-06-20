@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
 import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
-import com.capstone.plasticwise.data.pref.ItemPost
+import com.capstone.plasticwise.adapter.ItemPostAdapter
 import com.capstone.plasticwise.databinding.FragmentSettingsBinding
 import com.capstone.plasticwise.viewModel.ProfileFragmentViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -70,15 +70,7 @@ class SettingsFragment : Fragment() {
         setupRecyclerView()
 
         // Dummy list of items for RecyclerView
-        val itemList = listOf(
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user),
-            ItemPost(R.drawable.ic_profile_user)
-        )
+
 
         val gridLayoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.layoutManager = gridLayoutManager
@@ -110,9 +102,15 @@ class SettingsFragment : Fragment() {
                     is Result.Success -> {
                         showToast("Success")
                         val responsePost = result.data
-                        adapter.submitList(responsePost)
+                        if (responsePost.isNullOrEmpty()) {
+                            binding.placeholderImage.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.GONE
+                        } else {
+                            binding.placeholderImage.visibility = View.GONE
+                            binding.recyclerView.visibility = View.VISIBLE
+                            adapter.submitList(responsePost)
+                        }
                     }
-
                     is Result.Error -> {
                         showToast("Error")
                     }

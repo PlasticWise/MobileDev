@@ -62,9 +62,6 @@
         <activity
             android:name=".view.UserActivity"
             android:exported="false" />
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

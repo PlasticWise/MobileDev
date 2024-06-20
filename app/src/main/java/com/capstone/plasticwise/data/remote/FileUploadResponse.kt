@@ -1,4 +1,4 @@
-package com.capstone.plasticwise.model
+package com.capstone.plasticwise.data.remote
 
 data class FileUploadResponse(
     val success: Boolean,
