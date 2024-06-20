@@ -18,6 +18,8 @@ import com.capstone.plasticwise.data.remote.RegisterRequest
 import com.capstone.plasticwise.data.remote.RegisterResponse
 import com.capstone.plasticwise.data.remote.ResponseCraftingItem
 import com.capstone.plasticwise.data.remote.ResponseLogin
+import com.capstone.plasticwise.data.remote.ResponsePostUserItem
+import com.capstone.plasticwise.data.remote.ResponsePosts
 import com.capstone.plasticwise.data.remote.ResponseStory
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -47,18 +49,6 @@ class AuthenticationRepository private constructor(
         userPreference.logout()
     }
 
-    fun login(email: String, password: String) = liveData {
-        emit(Result.Loading)
-        try {
-            val successResponse = apiService.login(email, password)
-            emit(Result.Success(successResponse))
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseLogin::class.java)
-            emit(Result.Error(errorResponse.message))
-        }
-    }
-
     suspend fun responseCrafting(): List<ResponseCraftingItem> {
         val successResponse = apiService.getAllCrafting()
         storyDatabase.craftingDao().insertCraft(successResponse)
@@ -78,32 +68,20 @@ class AuthenticationRepository private constructor(
         ).liveData
     }
 
-    suspend fun getAllCraftingFromLocal(): List<ResponseCraftingItem> {
-        return storyDatabase.craftingDao().getAllCraft()
-    }
-//    fun getPost() = liveData {
-//        emit(Result.Loading)
-//        try {
-//            val successResponse = apiService.getStories()
-//            val limitedResponse = successResponse.listStory.take(5)
-//            emit(Result.Success(limitedResponse))
-//        } catch (e: HttpException) {
-//            val errorBody = e.response()?.errorBody()?.string()
-//            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-//            emit(Result.Error(errorResponse.message.toString()))
-//        }
-//    }
-
-    fun getUserMap() = liveData {
+    fun getAllPostsByAuthor(uid: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val successResponse = apiService.getStoriesLocation(1)
+            val successResponse = apiService.getAllPostsByAuthor(uid)
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
+            val errorResponse = Gson().fromJson(errorBody, ResponsePostUserItem::class.java)
+            emit(Result.Error(errorResponse.toString()))
         }
+    }
+
+    suspend fun getAllCraftingFromLocal(): List<ResponseCraftingItem> {
+        return storyDatabase.craftingDao().getAllCraft()
     }
 
     fun getDetailPosts(id: String) = liveData(Dispatchers.IO) {
@@ -113,8 +91,8 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
+            val errorResponse = Gson().fromJson(errorBody, ResponsePostUserItem::class.java)
+            emit(Result.Error(errorResponse.toString()))
         }
     }
 
@@ -125,8 +103,8 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
+            val errorResponse = Gson().fromJson(errorBody, ResponseCraftingItem::class.java)
+            emit(Result.Error(errorResponse.toString()))
         }
     }
 
@@ -137,8 +115,8 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
+            val errorResponse = Gson().fromJson(errorBody, ResponseCraftingItem::class.java)
+            emit(Result.Error(errorResponse.toString()))
         }
     }
 
@@ -149,8 +127,8 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
+            val errorResponse = Gson().fromJson(errorBody, ResponsePostUserItem::class.java)
+            emit(Result.Error(errorResponse.toString()))
         }
     }
 
@@ -181,6 +159,18 @@ class AuthenticationRepository private constructor(
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, RegisterResponse::class.java)
             emit((errorResponse.message.let { Result.Error(it) }))
+        }
+    }
+
+    fun deletePostById(id: String) = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        try {
+            val successResponse = apiService.deletePostUserById(id)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponsePostUserItem::class.java)
+            emit(Result.Error(errorResponse.toString()))
         }
     }
 
@@ -217,8 +207,31 @@ class AuthenticationRepository private constructor(
             emit(Result.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, ResponseStory::class.java)
-            emit(Result.Error(errorResponse.message.toString()))
+            val errorResponse = Gson().fromJson(errorBody, ResponsePosts::class.java)
+            emit(Result.Error(errorResponse.toString()))
+        }
+    }
+
+    fun updatePostUserById(id: String, imageFile: File, title: String, body: String, type: String, categories: String) = liveData(Dispatchers.IO){
+        emit(Result.Loading)
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "file",
+            imageFile.name,
+            requestImageFile
+        )
+        try {
+            val titleRequestBody = title.toRequestBody("multipart/form-data".toMediaType())
+            val bodyRequestBody = body.toRequestBody("multipart/form-data".toMediaType())
+            val categoriesRequestBody =
+                categories.toRequestBody("multipart/form-data".toMediaType())
+            val typeRequestBody = type.toRequestBody("multipart/form-data".toMediaType())
+            val successResponse = apiService.updatePostUserById(id, imageMultipart, titleRequestBody, bodyRequestBody, categoriesRequestBody, typeRequestBody)
+            emit(Result.Success(successResponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ResponsePostUserItem::class.java)
+            emit(Result.Error(errorResponse.toString()))
         }
     }
 

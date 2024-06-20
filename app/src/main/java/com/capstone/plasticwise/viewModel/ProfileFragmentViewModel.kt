@@ -12,4 +12,6 @@ class ProfileFragmentViewModel(private val repository: AuthenticationRepository)
         return repository.getSession().asLiveData()
     }
 
+    fun getAllPostsByAuthor(uid: String) = repository.getAllPostsByAuthor(uid)
+
 }

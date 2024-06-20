@@ -68,7 +68,6 @@
                 android:id="@+id/tvUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="10dp"
                 android:gravity="center_horizontal"
                 android:textSize="20sp"

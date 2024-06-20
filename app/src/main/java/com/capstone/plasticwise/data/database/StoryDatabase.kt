@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.capstone.plasticwise.data.remote.ListStoryItem
 import com.capstone.plasticwise.data.remote.ResponseCraftingItem
+import com.capstone.plasticwise.data.remote.ResponsePostUserItem
 import com.capstone.plasticwise.utils.Converters
 
 @Database(
@@ -15,10 +16,10 @@ import com.capstone.plasticwise.utils.Converters
     exportSchema = false
 )
 @TypeConverters(Converters::class)
-abstract class StoryDatabase : RoomDatabase(){
+abstract class StoryDatabase : RoomDatabase() {
 
-    abstract fun storyDao() : StoryDao
-    abstract fun remoteKeysDao() : RemoteKeysDao
+    abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     abstract fun craftingDao(): CraftingDao
 

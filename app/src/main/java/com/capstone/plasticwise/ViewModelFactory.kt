@@ -3,6 +3,7 @@ package com.capstone.plasticwise
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Update
 import com.capstone.plasticwise.di.Injection
 import com.capstone.plasticwise.repository.AuthenticationRepository
 import com.capstone.plasticwise.view.*
@@ -35,9 +36,7 @@ class ViewModelFactory(private val repository: AuthenticationRepository, private
             modelClass.isAssignableFrom(ProfileFragmentViewModel::class.java) -> {
                 ProfileFragmentViewModel(repository) as T
             }
-            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
-                MapsViewModel(repository) as T
-            }
+            
             modelClass.isAssignableFrom(SplashScreenViewModel::class.java) -> {
                 SplashScreenViewModel(repository) as T
             }
@@ -49,6 +48,12 @@ class ViewModelFactory(private val repository: AuthenticationRepository, private
             }
             modelClass.isAssignableFrom(PostViewModel::class.java) -> {
                 PostViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UpdateViewModel::class.java) -> {
+                UpdateViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(PostDetailActivityViewModel::class.java) -> {
+                PostDetailActivityViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

@@ -7,12 +7,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.capstone.plasticwise.R
+import com.capstone.plasticwise.Result
 import com.capstone.plasticwise.ViewModelFactory
 import com.capstone.plasticwise.data.pref.ItemPost
 import com.capstone.plasticwise.databinding.FragmentSettingsBinding
@@ -64,6 +67,8 @@ class SettingsFragment : Fragment() {
             startActivity(Intent(requireActivity(), AboutActivity::class.java))
         }
 
+        setupRecyclerView()
+
         // Dummy list of items for RecyclerView
         val itemList = listOf(
             ItemPost(R.drawable.ic_profile_user),
@@ -78,8 +83,7 @@ class SettingsFragment : Fragment() {
         val gridLayoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.layoutManager = gridLayoutManager
 
-        val adapter = ItemPostAdapter(requireContext(), itemList)
-        binding.recyclerView.adapter = adapter
+
 
         binding.switchAppearance.setOnCheckedChangeListener { _, isChecked ->
             sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
@@ -88,6 +92,37 @@ class SettingsFragment : Fragment() {
                 else AppCompatDelegate.MODE_NIGHT_NO
             )
         }
+
+        auth = FirebaseAuth.getInstance()
+    }
+
+    private fun setupRecyclerView() {
+        val adapter = ItemPostAdapter()
+        binding.recyclerView.adapter = adapter
+        val uid = auth.uid.toString()
+        profileViewModel.getAllPostsByAuthor(uid).observe(requireActivity(), Observer { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showToast("Loading...")
+                    }
+
+                    is Result.Success -> {
+                        showToast("Success")
+                        val responsePost = result.data
+                        adapter.submitList(responsePost)
+                    }
+
+                    is Result.Error -> {
+                        showToast("Error")
+                    }
+                }
+            }
+        })
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun logout() {
@@ -100,7 +135,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showLogoutConfirmationDialog() {
-        MaterialAlertDialogBuilder(requireContext(), androidx.appcompat.R.style.AlertDialog_AppCompat)
+        MaterialAlertDialogBuilder(
+            requireContext(),
+            androidx.appcompat.R.style.AlertDialog_AppCompat
+        )
             .setTitle("Confirmation Sign Out")
             .setMessage("Are you sure to Sign Out?")
             .setPositiveButton("Yes") { dialog, _ ->

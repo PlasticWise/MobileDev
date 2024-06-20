@@ -21,10 +21,9 @@
         android:theme="@style/Theme.MyPlasticWise"
         tools:targetApi="31">
         <activity
-            android:name=".view.UpdateActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.PostDetailActivity"
+            android:exported="false" />
+        <activity android:name=".view.UpdateActivity"
             android:exported="false" />
         <activity
             android:name=".view.AboutActivity"
@@ -62,6 +61,9 @@
         </activity>
         <activity
             android:name=".view.UserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.MainActivity"
             android:exported="false" />
 
         <meta-data

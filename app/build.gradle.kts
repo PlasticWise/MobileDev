@@ -110,7 +110,7 @@ dependencies {
 //   Rounded Glide
     implementation ("com.github.bumptech.glide:glide:4.13.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0")
-    implementation ("jp.wasabeef:glide-transformations:4.3.0")
+    implementation (libs.glide.transformations)
 //    UCROP
     implementation ("com.github.yalantis:ucrop:2.2.8-native")
 }
