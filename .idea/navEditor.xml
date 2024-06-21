@@ -8,6 +8,40 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="action_nav_craft_to_nav_detect">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
+                  <entry key="action_nav_home_to_nav_detect">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
+                  <entry key="nav_about">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="nav_detect">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="nav_home">
                     <value>
                       <LayoutPositions>
@@ -20,7 +54,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_profile">
+                  <entry key="nav_post">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -32,7 +66,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="settingsFragment">
+                  <entry key="nav_profile">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -40,6 +74,15 @@
                             <option name="x" value="12" />
                             <option name="y" value="12" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_nav_settings_to_nav_about">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

@@ -2,6 +2,8 @@
 <resources>
     <color name="whitePrimary">#ffff</color>
     <color name="greenPrimary">#1A9435</color>
+    <color name="blackPrimary">#000</color>
+    <color name="whiteSecondary">#fff</color>
     <color name="md_theme_primary">#1A9435</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#BBF0B5</color>

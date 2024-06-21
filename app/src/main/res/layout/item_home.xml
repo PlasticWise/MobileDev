@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
     app:strokeColor="?attr/colorSecondary"
     app:strokeWidth="1dp"
     app:cardForegroundColor="@android:color/transparent"
     app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
     app:cardElevation="1dp"
-    app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+    app:cardBackgroundColor="@color/md_theme_onSecondary"
     app:rippleColor="?attr/colorOnSurfaceVariant"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/ivStory"
@@ -33,34 +34,81 @@
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingTop="8dp"
+            android:layout_marginTop="6dp"
             android:paddingBottom="4dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:fontFamily="@font/inter_bold"
             app:layout_constraintTop_toBottomOf="@+id/ivStory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="User Name" />
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/tvTypeContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type : "
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintStart_toEndOf="@+id/tvTypeContainer"
+            android:layout_marginTop="8dp"
+            tools:text="Type" />
+
+        <TextView
+            android:id="@+id/tvCategoriesContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories : "
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvTypeContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvType"
+            app:layout_constraintStart_toEndOf="@+id/tvCategoriesContainer"
+            android:layout_marginTop="8dp"
+            tools:text="Categories" />
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             android:paddingTop="4dp"
             android:paddingBottom="8dp"
-            android:fontFamily="@font/inter"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="normal"
             android:maxLines="2"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            android:fontFamily="@font/inter"
+            app:layout_constraintTop_toBottomOf="@+id/tvCategories"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
             tools:text="Description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

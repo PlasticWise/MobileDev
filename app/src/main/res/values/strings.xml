@@ -37,11 +37,58 @@
     <string name="crafting_signIn">Hello, Lets Crafting Again !</string>
     <string name="no_have_account">Don’t have an Account ?</string>
     <string name="sign_up"> Sign Up</string>
-    <string name="desc_signUp">Input your data, Turning Plastic Awareness into Action</string>
+    <string name="desc_signUp">Turning Plastic Awareness into Action</string>
     <string name="have_an_account">Have an Account ?</string>
     <string name="open_map">Open Map!</string>
-    <string name="search">Search</string>
+    <string name="search">Search Idea...</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="detect">Detect</string>
+    <string name="input_your_image_for_result">Input Your Image For Result !</string>
+    <string name="txt_welcome">Trash Type Detection</string>
+    <string name="desc_menu1">Use our technology to detect different types of waste and get the information you need.</string>
+    <string name="titleMenu2">Valueable Information</string>
+    <string name="desc_menu2">We provide a complete guide to waste management so you can find all the information you need.</string>
+    <string name="titlemenu3">Post Management Tips</string>
+    <string name="desc_menu3">You can post tips and ways to manage waste effectively to help the community</string>
+    <string name="skip">Next</string>
 
-    <string name="user">Halo, %s !</string>
+
+    <string name="user">What\'s up, %s !</string>
+    <string name="tv_label_title">Plastic Waste in Indonesia</string>
+    <string name="slogan_label">Let\'s Take Care of Our Earth!</string>
+    <string name="tv_description">Unique Creations from Plastic Waste!</string>
+    <string name="tv_desc1">Let\'s Crafting Your Waste!</string>
+    <string name="title_chart">Percentage of Plastic Waste in Indonesia</string>
+    <string name="tv_Detect_Success">%1$s % %2$s</string>
+
+
+    <string-array name="categories_array">
+        <item>Bottle</item>
+        <item>Plastic Bag</item>
+        <item>Styrofoam</item>
+        <item>Pipe</item>
+        <item>Gallon</item>
+        <item>Container</item>
+        <item>Utensil</item>
+        <item>Packaging</item>
+        <item>Toy</item>
+        <item>Furniture</item>
+        <item>Film</item>
+        <item>Sheet</item>
+        <item>Fiber</item>
+        <item>Caps Lids</item>
+        <item>Foam</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="types_array">
+        <item>PETE</item>
+        <item>HDPE</item>
+        <item>V/PVC</item>
+        <item>LDPE</item>
+        <item>PP</item>
+        <item>PS</item>
+        <item>Other</item>
+    </string-array>
 
 </resources>

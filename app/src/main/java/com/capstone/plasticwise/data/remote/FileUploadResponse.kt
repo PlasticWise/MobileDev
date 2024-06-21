@@ -1,10 +1,18 @@
 package com.capstone.plasticwise.data.remote
 
-import com.google.gson.annotations.SerializedName
+data class FileUploadResponse(
+    val success: Boolean,
+    val message: String,
+    val data: UploadedImageData? = null
+)
 
-data class FileUploadResponse (
-    @field:SerializedName("error")
-    val error: Boolean,
-    @field:SerializedName("message")
-    val message: String
+data class UploadedImageData(
+    val id: String,
+    val imageUrl: String,
+    val title: String,
+    val body: String,
+    val categories: String,
+    val type: String,
+    val createdAt: String,
+    val updatedAt: String
 )

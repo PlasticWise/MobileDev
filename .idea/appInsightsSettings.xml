@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.capstone.plasticwise" />
+                  <option name="mobileSdkAppId" value="1:138320480511:android:21797ca9c66ff0784fa4ca" />
+                  <option name="projectId" value="plasticwise-server" />
+                  <option name="projectNumber" value="138320480511" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

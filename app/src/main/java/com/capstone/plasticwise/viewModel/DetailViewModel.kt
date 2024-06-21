@@ -5,6 +5,6 @@ import com.capstone.plasticwise.repository.AuthenticationRepository
 
 class DetailViewModel(private val repository: AuthenticationRepository) : ViewModel() {
 
-    fun getDetail(id: String) = repository.getDetail(id)
+    fun getDetail(id: String) = repository.getDetailPosts(id)
 
 }

@@ -2,9 +2,6 @@ package com.capstone.plasticwise
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,8 +10,11 @@ import com.capstone.plasticwise.databinding.ActivitySplashBinding
 <<<<<<< HEAD
 <<<<<<< HEAD
 import com.capstone.plasticwise.view.HomeActivity
-import com.capstone.plasticwise.view.UserActivity
+import com.capstone.plasticwise.view.WelcomeActivity
 import com.capstone.plasticwise.viewModel.SplashScreenViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 =======
@@ -31,41 +31,59 @@ class SplashActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
+    private lateinit var auth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
 
+        auth = FirebaseAuth.getInstance()
 
         binding.iconPicture.startAnimation(fadeInAnimation)
-        binding.splashText.startAnimation(slideUpAnimation)
+        binding.splashText.startAnimation(fadeInAnimation)
 
 <<<<<<< HEAD
         observeSession()
     }
 
     private fun observeSession() {
-        viewModel.getSession().observe(this) { session ->
-            lifecycleScope.launch {
-                delay(3000) // 3 second delay
-                if(!session.isLogin) {
-                    navigateToUserActivity()
-                } else {
-                    navigateToHomeActivity()
+        lifecycleScope.launch {
+            delay(2500)
+            val user = auth.currentUser
+            if (user != null) {
+                // Log to help debug
+                user.getIdToken(true).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        println("User is already logged in, navigating to HomeActivity")
+                        navigateToHomeActivity()
+                    } else {
+                        val exception = task.exception
+                        if (exception is FirebaseAuthInvalidUserException || exception is FirebaseAuthInvalidCredentialsException) {
+                            navigateToUserActivity()
+                        } else {
+                            exception?.printStackTrace()
+                            navigateToUserActivity()
+                        }
+                    }
                 }
+            } else {
+                // Log to help debug
+                println("No user logged in, navigating to UserActivity")
+                navigateToUserActivity()
             }
         }
     }
+
     private fun navigateToHomeActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
+
     private fun navigateToUserActivity() {
-        startActivity(Intent(this, UserActivity::class.java))
+        startActivity(Intent(this, WelcomeActivity::class.java))
         finish()
 =======
         Handler(Looper.getMainLooper()).postDelayed({

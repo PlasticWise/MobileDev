@@ -4,17 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.capstone.plasticwise.data.remote.ListStoryItem
+import androidx.room.TypeConverters
+import com.capstone.plasticwise.data.remote.ResponseCraftingItem
+import com.capstone.plasticwise.utils.Converters
 
 @Database(
-    entities = [ListStoryItem::class, RemoteKeys::class],
-    version = 1,
+    entities = [ResponseCraftingItem::class],
+    version = 3,
     exportSchema = false
 )
-abstract class StoryDatabase : RoomDatabase(){
+@TypeConverters(Converters::class)
+abstract class StoryDatabase : RoomDatabase() {
 
-    abstract fun storyDao() : StoryDao
-    abstract fun remoteKeysDao() : RemoteKeysDao
+    abstract fun craftingDao(): CraftingDao
 
     companion object {
         @Volatile

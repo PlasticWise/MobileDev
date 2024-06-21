@@ -36,6 +36,9 @@ class CameraActivity : AppCompatActivity() {
             startCamera()
         }
         binding.captureImage.setOnClickListener { takePhoto() }
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onResume() {

@@ -8,12 +8,36 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.capstone.plasticwise.view.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
+
+
+    <fragment
+        android:id="@+id/nav_post"
+        android:name="com.capstone.plasticwise.view.PostFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_post" />
+
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.capstone.plasticwise.view.SettingsFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_settings" />
+        android:label="Profile"
+        tools:layout="@layout/fragment_settings">
+    </fragment>
 
+    <fragment
+        android:id="@+id/nav_detect"
+        android:name="com.capstone.plasticwise.view.DetectFragment"
+        android:label="Detect"
+        tools:layout="@layout/fragment_detect"/>
+
+    <action
+        android:id="@+id/action_nav_home_to_nav_detect"
+        app:destination="@id/nav_detect" />
+
+    <action
+        android:id="@+id/action_nav_craft_to_nav_detect"
+        app:destination="@id/nav_detect"
+        android:label="fragment_detect"
+        tools:layout="@layout/fragment_detect" />
 </navigation>
