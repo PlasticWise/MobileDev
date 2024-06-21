@@ -94,11 +94,13 @@ class SettingsFragment : Fragment() {
                 when (result) {
                     is Result.Loading -> {
                         showToast("Loading...")
+                        showLoading(true)
                     }
 
                     is Result.Success -> {
                         showToast("Success")
                         val responsePost = result.data
+                        showLoading(false)
                         if (responsePost.isNullOrEmpty()) {
                             binding.placeholderImage.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
@@ -109,11 +111,20 @@ class SettingsFragment : Fragment() {
                         }
                     }
                     is Result.Error -> {
+                        showLoading(false)
                         showToast("Error")
                     }
                 }
             }
         })
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 
     private fun showToast(message: String) {

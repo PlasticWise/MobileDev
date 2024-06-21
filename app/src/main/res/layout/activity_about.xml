@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
-                android:text="1. (ML) M006D4KX2283 – Rafidah Rasyid – Universitas Brawijaya\n2. (ML) M004D4KY2743 – Javier Janeti Surpantyo – Institut Teknologi Sepuluh Nopember\n3. (ML) M009D4KY3262 – Wardiansyah Fauzi Abdillah – Universitas Gunadarma\n4. (CC) C004D4KX0371 – Khalisha Dzakira Hidayat – Institut Teknologi Sepuluh Nopember\n5. (CC) C009D4KY0692 – Mohammad Fierza Heikal Firdaus – Universitas Gunadarma – [Active]\n6. (MD) A129D4KY0440 – Zhaqian Ro'uf Alfauzi – Politeknik Negeri Jember\n7. (MD) A009D4KY4494 – Haikal Abizar – Universitas Gunadarma"
+                android:text="1. (ML) M006D4KX2283 – Rafidah Rasyid – Universitas Brawijaya\n2. (ML) M004D4KY2743 – Javier Janeti Surpantyo – Institut Teknologi Sepuluh Nopember\n3. (ML) M009D4KY3262 – Wardiansyah Fauzi Abdillah – Universitas Gunadarma\n4. (CC) C004D4KX0371 – Khalisha Dzakira Hidayat – Institut Teknologi Sepuluh Nopember\n5. (CC) C009D4KY0692 – Mohammad Fierza Heikal Firdaus – Universitas Gunadarma \n6. (MD) A129D4KY0440 – Zhaqian Ro'uf Alfauzi – Politeknik Negeri Jember\n7. (MD) A009D4KY4494 – Haikal Abizar – Universitas Gunadarma"
                 android:textSize="14sp"
                 android:layout_marginTop="16dp" />
 

@@ -30,6 +30,11 @@ class CraftAdapter : ListAdapter<ResponseCraftingItem, CraftAdapter.ListViewHold
                 intent.putExtra(CraftActivity.EXTRA_ID, listCraft.id)
                 itemView.context.startActivity(intent)
             }
+            binding.buttonDetail.setOnClickListener {
+                val intent = Intent(itemView.context, CraftActivity::class.java)
+                intent.putExtra(CraftActivity.EXTRA_ID, listCraft.id)
+                itemView.context.startActivity(intent)
+            }
         }
     }
 
